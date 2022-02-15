@@ -15,6 +15,7 @@ def num2():
     else:
         print("НЕВЕРНО")
 
+
 def num3():
     login = input("Login:")
     res_addr = input("Address:")
@@ -26,6 +27,7 @@ def num3():
 
 def num4():
     print(input())
+
 
 def num5():
     string = str(input("Строка:"))
@@ -91,7 +93,6 @@ def num7():
     print(number)
 
 
-
 def num8():
     height = []
     count = 0
@@ -123,7 +124,6 @@ def num9():
                 break
 
 
-
 def num11():
     quan = int(input("Высота пирамиды:"))
     a = 1
@@ -132,6 +132,7 @@ def num11():
         quan1 -= 1
         print(" "*quan1, "*"*a, " "*quan1)
         a += 2
+
 
 def num12():
     N = int(input("Число:"))
