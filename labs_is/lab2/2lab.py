@@ -51,29 +51,33 @@ def num4():
 
 def num5():
     l = [1, 2, 3, 1, 1, 1, 2, 8, 3, 9, 9, 0, 3]
+    print(l)
     for i in range(1, len(l)):
         if l[i] > l[i-1]:
             print(l[i])
 
 
 def num6():
-    l = [1, 2, 3, 1, 1, 1, -2, -8, 3, -9, -9, 0, 3]
+    l = [1, -2, 3, -1, 1, 1, -2, -8, 3, -9, -9, 0, 3]
+    print(l)
     for i in range(1, len(l)):
-        if l[i-1] < 0 and l[i] < 0:
+        if (l[i-1] < 0 and l[i] < 0) or (l[i-1] > 0 and l[i] > 0):
             print(l[i-1], l[i])
             break
 
 
 def num7():
-    A = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    for i in range(0, len(A)-1, 2):
-        A[i], A[i+1] = A[i+1], A[i]
+    a = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    print(a)
+    for i in range(0, len(a)-1, 2):
+        a[i], a[i+1] = a[i+1], a[i]
 
-    print(A)
+    print(a)
 
 
 def num8():
     l = [1, 1, 1, 1, 2, 2, 3, 5, 8, 4, 9, 9]
+    print(l)
     for i in range(0, len(l)):
         if l.count(l[i]) == 1:
             print(l[i])
@@ -107,5 +111,3 @@ def num9():
         quit()
 
     print("NO")
-
-# alt shift down
