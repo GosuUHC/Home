@@ -1,4 +1,4 @@
-package prog_lang.lab1.Flat;
+package prog_lang.lab1.geometry2d;
 
 public class Circle extends Ellipse{
             

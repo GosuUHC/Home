@@ -1,12 +1,12 @@
 package prog_lang.lab1.MainTest;
 import java.util.Scanner;
 
-import prog_lang.lab1.Flat.Circle;
-import prog_lang.lab1.Flat.Ellipse;
-import prog_lang.lab1.Flat.Rectangle;
-import prog_lang.lab1.Flat.Square;
-import prog_lang.lab1.Flat.Triangle;
-import prog_lang.lab1.Volumetric.Volumetric;
+import prog_lang.lab1.geometry2d.Circle;
+import prog_lang.lab1.geometry2d.Ellipse;
+import prog_lang.lab1.geometry2d.Rectangle;
+import prog_lang.lab1.geometry2d.Square;
+import prog_lang.lab1.geometry2d.Triangle;
+import prog_lang.lab1.geometry3d.geometry3d;
 //так много, тк лучше их все указывать 
 public class MainTest{
 public static void main(String[] args) throws Exception {
@@ -53,7 +53,7 @@ public static void main(String[] args) throws Exception {
                     System.out.println("CircleCylinder with r from ellipse");
                     System.out.println("Enter height:");
                     h=in.nextDouble();
-                    Volumetric CYL = new Volumetric(circ, h);
+                    geometry3d CYL = new geometry3d(circ, h);
                     CYL.show();
 
                 }break;
@@ -61,12 +61,12 @@ public static void main(String[] args) throws Exception {
                     System.out.println("TriangleCylinder with a, b, c from triangle");
                     System.out.println("Enter height:");
                     h=in.nextDouble();
-                    Volumetric CYL = new Volumetric(tri, h);
+                    geometry3d CYL = new geometry3d(tri, h);
                     CYL.show();
                 }break;
                 case 3: {
                     System.out.println("RectangleCylinder with a=a and b=h from rectangle!");
-                     Volumetric CYL = new Volumetric(rect, b1);
+                    geometry3d CYL = new geometry3d(rect, b1);
                     CYL.show();
                 }break;
                 default:{

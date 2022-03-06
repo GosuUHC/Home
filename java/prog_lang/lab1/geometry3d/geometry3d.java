@@ -1,13 +1,13 @@
-package prog_lang.lab1.Volumetric;
-import prog_lang.lab1.Flat.Flat;
+package prog_lang.lab1.geometry3d;
+import prog_lang.lab1.geometry2d.geometry2d;
 
-public class Volumetric {
+public class geometry3d {
     
-        protected Flat.Shape f;
+        protected geometry2d.Figure f;
     
         private double h;
     
-        public Volumetric(Flat.Shape f, double h){
+        public geometry3d(geometry2d.Figure f, double h){
             if(h>0){
                 
                 this.f=f;

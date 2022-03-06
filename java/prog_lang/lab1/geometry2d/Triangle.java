@@ -1,6 +1,6 @@
-package prog_lang.lab1.Flat;
+package prog_lang.lab1.geometry2d;
 
-public class Triangle implements Flat.Shape{
+public class Triangle implements geometry2d.Figure{
     protected double a;
     protected double b;
     protected double c;
