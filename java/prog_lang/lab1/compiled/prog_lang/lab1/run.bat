@@ -1,2 +1,2 @@
-java -jar --enable-preview lab1.jar
+java -jar --enable-preview lab_1.jar
 pause
