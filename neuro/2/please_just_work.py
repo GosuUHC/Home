@@ -39,14 +39,14 @@ def train():
             error = final_result - x[-1]
             losses.append(error)
             weight_delta_out = error*d_tanh(final_result)
-            w2[0] = w2[0] - learn * weight_delta_out * hidden_layer_result[0]
-            w2[1] = w2[1] - learn * weight_delta_out * hidden_layer_result[1]
+            w2[0] -= learn * weight_delta_out * hidden_layer_result[0]
+            w2[1] -= learn * weight_delta_out * hidden_layer_result[1]
 
             weight_delta_hidden = w2 * weight_delta_out * \
                 d_tanh(hidden_layer_result)
-            w1[0, :] = w1[0, :] - \
+            w1[0, :] -= \
                 np.array(x[0:2]) * weight_delta_hidden[0] * learn
-            w1[1, :] = w1[1, :] - \
+            w1[1, :] -=  \
                 np.array(x[0:2]) * weight_delta_hidden[1] * learn
     for i in input_data_and_expected_result:
         z, o = predict(i[0:2])
