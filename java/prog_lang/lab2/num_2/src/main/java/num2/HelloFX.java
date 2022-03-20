@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 public class HelloFX extends Application {
 
     public void start(Stage primarystage) {
-        primarystage.setTitle("Prikol2");
         primarystage.centerOnScreen();
         TextField txtwidget1 = new TextField();
         TextField txtwidget2 = new TextField();
@@ -75,7 +74,7 @@ public class HelloFX extends Application {
         checkBox3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent3) {
-                if (checkBox3.isSelected()) {// что-то сделать
+                if (checkBox3.isSelected()) {
                     txtwidget3.setOpacity(100);
                     txtwidget3.setText("Goodbye!");
                     ;

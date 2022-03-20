@@ -1,6 +1,5 @@
 package num4;
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,8 +17,6 @@ public class PrimaryController {
     Button times = new Button("*");
     @FXML
     Button div = new Button("/");
-    @FXML
-    Button dot = new Button(".");
     @FXML
     Button equals = new Button("=");
     @FXML
@@ -55,16 +52,16 @@ public class PrimaryController {
     boolean firstNumberEntered = false;
     boolean WhatEntered = false;
     boolean secondNumberEntered = false;
-    int result = 0;
+    double result = 0;
+
     @FXML
-    public void InsertNumber(ActionEvent event){
-        if(!issecondnumber){
+    public void InsertNumber(ActionEvent event) {
+        if (!issecondnumber) {
             Button tempB = (Button) event.getSource();
             firstNText += tempB.getText();
             firstN.setText(firstNText);
             firstNumberEntered = true;
-        }
-        else{
+        } else {
             Button tempB = (Button) event.getSource();
             secondNText += tempB.getText();
             secondN.setText(secondNText);
@@ -73,15 +70,17 @@ public class PrimaryController {
     }
 
     @FXML
-    public void InsertWhatText(ActionEvent event){
-        issecondnumber = true;
-        Button tempB = (Button) event.getSource();
-        whatText = tempB.getText();
-        What.setText(whatText);
-        WhatEntered = true;
+    public void InsertWhatText(ActionEvent event) {
+        if (firstNumberEntered) {
+            issecondnumber = true;
+            Button tempB = (Button) event.getSource();
+            whatText = tempB.getText();
+            What.setText(whatText);
+            WhatEntered = true;
+        }
     }
 
-    public void Refresh(ActionEvent event){
+    public void Refresh(ActionEvent event) {
         issecondnumber = false;
         firstNumberEntered = false;
         WhatEntered = false;
@@ -97,32 +96,27 @@ public class PrimaryController {
     }
 
     @FXML
-    public void DisplayResult(ActionEvent event){
-        if(firstNumberEntered && WhatEntered && secondNumberEntered){
-            int firstNumber = Integer.valueOf(firstN.getText());
-            int secondNumber = Integer.valueOf(secondN.getText());
-            
-            if(What.getText()==plus.getText()){
+    public void DisplayResult(ActionEvent event) {
+        if (firstNumberEntered && WhatEntered && secondNumberEntered) {
+            Double firstNumber = Double.valueOf(firstN.getText());
+            Double secondNumber = Double.valueOf(secondN.getText());
+
+            if (What.getText() == plus.getText()) {
                 result = firstNumber + secondNumber;
-            }
-            else if(What.getText()==minus.getText()){
+            } else if (What.getText() == minus.getText()) {
                 result = firstNumber - secondNumber;
-            }
-            else if(What.getText()==times.getText()){
+            } else if (What.getText() == times.getText()) {
                 result = firstNumber * secondNumber;
-            }   
-            else if(What.getText()==div.getText()){
+            } else if (What.getText() == div.getText()) {
                 result = firstNumber / secondNumber;
             }
-            
+
             secondN.setOpacity(0);
             firstN.setOpacity(0);
-            What.setText(""+result);
-        }
-        else{
+            What.setText("" + result);
+        } else {
             What.setText("Seg fault");
         }
     }
-   
 
 }

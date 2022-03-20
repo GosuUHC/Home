@@ -31,11 +31,6 @@
                   <Font name="Century Gothic" size="25.0" />
                </font>
             </Button>
-            <Button fx:id="dot" maxHeight="200.0" maxWidth="100.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#InsertWhatText" prefHeight="40.0" prefWidth="65.0" text=".">
-               <font>
-                  <Font name="Century Gothic" size="25.0" />
-               </font>
-            </Button>
             <Button fx:id="equals" maxHeight="200.0" maxWidth="100.0" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#DisplayResult" prefHeight="40.0" prefWidth="65.0" text="=">
                <font>
                   <Font name="Century Gothic" size="25.0" />

@@ -51,6 +51,7 @@ public class PrimaryController {
         if (count > 0) {
             butt.setDisable(false);
         } else {
+            finalcost.setText("");
             butt.setDisable(true);
         }
     }
