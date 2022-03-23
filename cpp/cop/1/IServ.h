@@ -1,20 +1,22 @@
 #include "IUnknown.h"
 
-class IX : public IUnknown_
+class IServ0 : public IUnknown_
 {
   public:
   virtual void Fx() = 0;
 };
 
-class IY : public IUnknown_
+class IServ1 : public IUnknown_
 {
   public:
   virtual void Fy() = 0;
 };
-class IClassFactory : public IUnknown_
+class IClassFactory_ : public IUnknown_
 {
-  //public:
+  public:
+  virtual H_RESULT CreateInstance(I_ID iid, void** ppv) = 0;
 };
 
-//переделать под матем объект
+
+
 

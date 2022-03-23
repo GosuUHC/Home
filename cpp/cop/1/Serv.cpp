@@ -1,7 +1,6 @@
 #include "Serv.h"
 #include <iostream>
 
-//Fx and Fy for IX and IY realization
 
 void trace(const char* msg){std::cout<<msg<<std::endl;}
 
@@ -18,61 +17,83 @@ void Serv1::Fy(){
     trace("Fy function server1 interface 2");
 }
 
-/*
-Походу потому что не используем "unknwn.h" -> реализовали типы
-H_RESULT и тд(32 разрядная структура) как обычное интовое значение 
--1 = IUnknown
-1 = IX
-2 = IY
-*/
-//запрос интерфейса
+ULONG_ Serv0::AddRef(){
+
+}
+ULONG_ Serv0::Release(){
+
+}
+ULONG_ Serv1::AddRef(){
+
+}
+ULONG_ Serv1::Release(){
+
+}
+
+
+
 H_RESULT Serv0::QueryInterface(I_ID iid, void** ppv){
-    if(iid == -1){
-        *ppv = (IUnknown_*) (IX*) this;
+    if(iid == iid_IUnknown_){
+        *ppv = (IUnknown_*) (IServ0*) this;
     }
-    else if(iid == 1){
-        *ppv = (IX*) this;
+    else if(iid == iid_IServ0){
+        *ppv = (IServ0*) this;
     }
-    else if(iid == 2){
-        *ppv = (IY*) this;
+    else if(iid == iid_IServ1){
+        *ppv = (IServ1*) this;
     }
     else{
         *ppv = NULL;
-        return -2;
+        return E_NOINTERFACE;
     }
+    return S_OK;// вот здесь AddRef
 }
 
 H_RESULT Serv1::QueryInterface(I_ID iid, void** ppv){
-    if(iid == -1){
-        *ppv = (IUnknown_*) (IX*) this;
+    if(iid == iid_IUnknown_){
+        *ppv = (IUnknown_*) (IServ1*) this;
     }
-    else if(iid == 1){
-        *ppv = (IX*) this;
+    else if(iid == iid_IServ0){
+        *ppv = (IServ0*) this;
     }
-    else if(iid == 2){
-        *ppv = (IY*) this;
+    else if(iid == iid_IServ1){
+        *ppv = (IServ1*) this;
     }
     else{
         *ppv = NULL;
-        return -2;
+        return E_NOINTERFACE;
+    }
+    return S_OK;
+}
+
+H_RESULT IServFactory::CreateInstance(I_ID iid, void** ppv){
+    if(iid == iid_IServ0){
+        Serv0* serv = new Serv0();
+        serv->QueryInterface(iid, ppv);
+    }
+    else if(iid == iid_IServ1){
+        Serv1* serv1 = new Serv1();
+        serv1->QueryInterface(iid, ppv);
     }
 }
-H_RESULT CreateInstance(CLS_ID clsid, I_ID iid, void** ppv)
-{
-    IUnknown_* iknp;
-    if (clsid == 1){
-        iknp = (IUnknown_*) (IX*) new Serv0();
-    } 
-    else if (clsid == 2){
-        iknp = (IUnknown_*) (IX*) new Serv1();
+
+H_RESULT IServFactory::QueryInterface(I_ID iid, void** ppv){
+    if (iid == iid_IUnknown_){
+        *ppv = (IClassFactory_*) this;
+    }
+    else if (iid == iid_IClassFactory){
+        *ppv = (IClassFactory_*) this;
     }
     else{
-        return 1;
+        ppv = NULL;
+        return E_NOINTERFACE;
     }
-    if (iknp->QueryInterface(iid, ppv) == -2){
-        return 2;
+    return S_OK;
+}
+H_RESULT GetClassObject(CLS_ID servid, I_ID IClassFactory_id, void** ppv){
+    if (servid == clsidServ){
+        IServFactory* fact = new IServFactory();
+        fact->QueryInterface(IClassFactory_id, ppv);
     }
-    return 0;
-
 
 }
