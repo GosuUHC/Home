@@ -18,10 +18,15 @@ void Serv1::Fy(){
 }
 
 ULONG_ Serv0::AddRef(){
-
+    this->count++;
+    std::cout<<"Serv add ref count:"<<this->count<<std::endl;
 }
 ULONG_ Serv0::Release(){
-
+    count--;
+    std::cout<<"Serv release count:"<<this->count<<std::endl;
+    if(this->count==0){
+        delete this;
+    }
 }
 ULONG_ Serv1::AddRef(){
 
@@ -30,7 +35,23 @@ ULONG_ Serv1::Release(){
 
 }
 
-
+Serv0::~Serv0(){
+    trace("~Serv0");
+}
+IServFactory::~IServFactory(){
+    trace("~ServFactory");
+}
+ULONG_ IServFactory::AddRef(){
+    this->count++;
+    std::cout<<"Factory add ref count:"<<this->count<<std::endl;
+}
+ULONG_ IServFactory::Release(){
+    this->count--;
+    std::cout<<"Factory release count:"<<this->count<<std::endl;
+    if (this->count==0){
+        delete this;
+    }
+}
 
 H_RESULT Serv0::QueryInterface(I_ID iid, void** ppv){
     if(iid == iid_IUnknown_){
