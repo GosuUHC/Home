@@ -5,8 +5,8 @@ void trace(const char *msg) { std::cout << msg << std::endl; }
 
 void EnterIntMatrix::NewMemoryForIntMatrix(int **&matr, int n, int m)
 {
-    trace("NewMemory");
-    matr = new int* [n];
+    trace("NewMatrMemory");
+    matr = new int *[n];
     for (int i = 0; i < n; i++)
     {
         matr[i] = new int[m];
@@ -28,7 +28,7 @@ int **EnterIntMatrix::EnterMatrix(int n, int m)
     {
         for (int j = 0; j < m; j++)
         {
-            std::cout << "Entering element index:" << i << " " << j << std::endl;
+            std::cout << "Enter element with index:" << i << " " << j << std::endl;
             std::cin >> matr[i][j];
         }
     }
@@ -47,13 +47,12 @@ void TransposeAndPrintAnyMatrix::TransposeMatrix(int **&matr, int n, int m)
             matr[j][i] = buff;
         }
     }
-    
 }
 
 void TransposeAndPrintAnyMatrix::PrintMatrix(int **matr, int n, int m)
 {
-    std::cout << std::endl
-              << std::endl;
+    std::cout << std::endl;
+
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
@@ -65,12 +64,12 @@ void TransposeAndPrintAnyMatrix::PrintMatrix(int **matr, int n, int m)
 ULONG_ EnterIntMatrix::AddRef()
 {
     this->count++;
-    std::cout << "EnterMatrix object added; count:" << this->count << std::endl;
+    std::cout << "\nEnterMatrix object added; count:" << this->count << std::endl;
 }
 ULONG_ EnterIntMatrix::Release()
 {
     this->count--;
-    std::cout << "EnterMatrix object released; count:" << this->count << std::endl;
+    std::cout << "\nEnterMatrix object released; count:" << this->count << std::endl;
     if (this->count == 0)
     {
         delete this;
@@ -79,12 +78,12 @@ ULONG_ EnterIntMatrix::Release()
 ULONG_ TransposeAndPrintAnyMatrix::AddRef()
 {
     this->count++;
-    std::cout << "TransposeAndPrintAnyMatrix object added; count:" << this->count << std::endl;
+    std::cout << "\nTransposeAndPrintAnyMatrix object added; count:" << this->count << std::endl;
 }
 ULONG_ TransposeAndPrintAnyMatrix::Release()
 {
     this->count--;
-    std::cout << "TransposeAndPrintAnyMatrix object released; count:" << this->count << std::endl;
+    std::cout << "\nTransposeAndPrintAnyMatrix object released; count:" << this->count << std::endl;
     if (this->count == 0)
     {
         delete this;
@@ -93,27 +92,27 @@ ULONG_ TransposeAndPrintAnyMatrix::Release()
 
 EnterIntMatrix::~EnterIntMatrix()
 {
-    trace("~EnterIntMatrix");
+    trace("\n~EnterIntMatrix");
 }
 
 TransposeAndPrintAnyMatrix::~TransposeAndPrintAnyMatrix()
 {
-    trace("~TransposeAndPrintAnyMatrix");
+    trace("\n~TransposeAndPrintAnyMatrix");
 }
 IFactory::~IFactory()
 {
-    trace("~Factory");
+    trace("\n~Factory");
 }
 
 ULONG_ IFactory::AddRef()
 {
     this->count++;
-    std::cout << "Factory add ref count:" << this->count << std::endl;
+    std::cout << "\nFactory add ref count:" << this->count << std::endl;
 }
 ULONG_ IFactory::Release()
 {
     this->count--;
-    std::cout << "Factory release count:" << this->count << std::endl;
+    std::cout << "\nFactory release count:" << this->count << std::endl;
     if (this->count == 0)
     {
         delete this;

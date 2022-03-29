@@ -9,8 +9,8 @@ private:
 
 public:
   int **EnterMatrix(int, int);
-  void NewMemoryForIntMatrix(int**&, int, int);
-  void DelMemoryForIntMatrix(int**&, int, int);
+  void NewMemoryForIntMatrix(int **&, int, int);
+  void DelMemoryForIntMatrix(int **&, int, int);
   H_RESULT QueryInterface(I_ID iid, void **ppv);
   ULONG_ AddRef();
   ULONG_ Release();
