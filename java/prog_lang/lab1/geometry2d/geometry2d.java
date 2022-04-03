@@ -1,4 +1,4 @@
-package prog_lang.lab1.geometry2d;
+package lab1.geometry2d;
 
 public class geometry2d {
     public interface Figure {

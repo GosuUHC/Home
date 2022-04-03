@@ -1,12 +1,12 @@
-package prog_lang.lab1.MainTest;
+package lab1.MainTest;
 
 import java.util.Scanner;
 
-import prog_lang.lab1.geometry2d.Circle;
-import prog_lang.lab1.geometry2d.Rectangle;
-import prog_lang.lab1.geometry3d.geometry3d;
-import prog_lang.lab1.Exceptions.Ex.Exc2D;
-import prog_lang.lab1.Exceptions.Ex.Exc3D;
+import lab1.geometry2d.Circle;
+import lab1.geometry2d.Rectangle;
+import lab1.geometry3d.geometry3d;
+import lab1.Exceptions.Ex.Exc2D;
+import lab1.Exceptions.Ex.Exc3D;
 
 public class MainTest {
     public static void main(String[] args) throws Exception {

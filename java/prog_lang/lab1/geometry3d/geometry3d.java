@@ -1,8 +1,8 @@
-package prog_lang.lab1.geometry3d;
+package lab1.geometry3d;
 
-import prog_lang.lab1.geometry2d.geometry2d;
-import prog_lang.lab1.Exceptions.Ex;
-import prog_lang.lab1.Exceptions.Ex.Exc3D;
+import lab1.geometry2d.geometry2d;
+import lab1.Exceptions.Ex;
+import lab1.Exceptions.Ex.Exc3D;
 
 public class geometry3d {
 

@@ -1,7 +1,7 @@
-package prog_lang.lab1.geometry2d;
+package lab1.geometry2d;
 
-import prog_lang.lab1.Exceptions.Ex;
-import prog_lang.lab1.Exceptions.Ex.Exc2D;
+import lab1.Exceptions.Ex;
+import lab1.Exceptions.Ex.Exc2D;
 
 public class Circle implements geometry2d.Figure {
 

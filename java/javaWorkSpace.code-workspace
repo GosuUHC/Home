@@ -1,0 +1,17 @@
+{
+    "folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.project.sourcePaths": [
+			"prog_lang/lab3/number3/src/main/java/number3",
+			"prog_lang"
+		],
+		"java.dependency.syncWithFolderExplorer": true,
+		"java.dependency.packagePresentation": "hierarchical",
+		"maven.view": "hierarchical",
+		"java.project.outputPath": "comp"
+	}
+}

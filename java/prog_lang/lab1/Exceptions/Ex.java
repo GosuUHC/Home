@@ -1,9 +1,9 @@
-package prog_lang.lab1.Exceptions;
+package lab1.Exceptions;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
-import prog_lang.lab1.geometry2d.geometry2d.Figure;;
+import lab1.geometry2d.geometry2d.Figure;;
 
 public class Ex {
     public class Exc2D extends Exception {
