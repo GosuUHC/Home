@@ -10,8 +10,8 @@ import javafx.scene.control.ProgressBar;
 
 public class PrimaryController {
     boolean isFilling = false;
-    boolean isPaused = false;
-    Thread t = new MyThreadT();
+    Object obj = new Object();
+    MyThreadT t = new MyThreadT();
     int progress = 0;
 
     @FXML
@@ -43,44 +43,55 @@ public class PrimaryController {
     }
 
     public void pauseFill() {
-        if (!isPaused) {
-            pauseLoopBtn.setText("Продолжить");
-            
-            isPaused = true;
-        } else {
-            isPaused = false;
-            t.resume();
-        }
-
+        System.out.println("Pause");
+        t.changeStateBool();
     }
 
     public void stopFill() {
-        progress = 0;
         t.interrupt();
-        progressBar.setProgress(0);
-        progressLabel.setText("");
+        t.updateProgress(0);
     }
 
     class MyThreadT extends Thread {
+        boolean isPaused = false;
 
         public void run() {
             for (int i = 0; i < 1000; i++) {
                 try {
                     Thread.sleep(20);
-
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            progress++;
-                            updateProgress(progress);
+                    if (isPaused) {
+                        synchronized (this) {
+                            while (isPaused) {
+                                wait();
+                            }
                         }
+                    } else {
 
-                    });
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
 
+                                progress++;
+                                updateProgress(progress);
+                            }
+
+                        });
+                    }
                 } catch (InterruptedException e) {
                     break;
                 }
             }
+        }
+
+        public synchronized void changeStateBool() {
+            if (isPaused) {
+                pauseLoopBtn.setText("Пауза");
+            } else {
+                pauseLoopBtn.setText("Продолжить");
+            }
+            this.isPaused = !isPaused;
+
+            notify();
         }
 
         public void updateProgress(int i) {
