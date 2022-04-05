@@ -5,7 +5,7 @@ void trace(const char *msg) { std::cout << msg << std::endl; }
 
 void EnterIntMatrix::NewMemoryForIntMatrix(int **&matr, int n, int m)
 {
-    trace("NewMatrMemory");
+    trace("\nNewMatrMemory");
     matr = new int *[n];
     for (int i = 0; i < n; i++)
     {
@@ -14,6 +14,7 @@ void EnterIntMatrix::NewMemoryForIntMatrix(int **&matr, int n, int m)
 }
 void EnterIntMatrix::DelMemoryForIntMatrix(int **&matr, int n, int m)
 {
+    trace("\nDelMatrMemory");
     for (int i = 0; i < n; i++)
     {
         delete[] matr[i];
@@ -64,12 +65,12 @@ void TransposeAndPrintAnyMatrix::PrintMatrix(int **matr, int n, int m)
 ULONG_ EnterIntMatrix::AddRef()
 {
     this->count++;
-    std::cout << "\nEnterMatrix object added; count:" << this->count << std::endl;
+    std::cout << "\nEnterMatrix object " << this << " added; count:" << this->count << std::endl;
 }
 ULONG_ EnterIntMatrix::Release()
 {
     this->count--;
-    std::cout << "\nEnterMatrix object released; count:" << this->count << std::endl;
+    std::cout << "\nEnterMatrix object " << this << " released; count:" << this->count << std::endl;
     if (this->count == 0)
     {
         delete this;
@@ -78,12 +79,12 @@ ULONG_ EnterIntMatrix::Release()
 ULONG_ TransposeAndPrintAnyMatrix::AddRef()
 {
     this->count++;
-    std::cout << "\nTransposeAndPrintAnyMatrix object added; count:" << this->count << std::endl;
+    std::cout << "\nTransposeAndPrintAnyMatrix object " << this << " added; count:" << this->count << std::endl;
 }
 ULONG_ TransposeAndPrintAnyMatrix::Release()
 {
     this->count--;
-    std::cout << "\nTransposeAndPrintAnyMatrix object released; count:" << this->count << std::endl;
+    std::cout << "\nTransposeAndPrintAnyMatrix object " << this << " released; count:" << this->count << std::endl;
     if (this->count == 0)
     {
         delete this;
@@ -107,12 +108,12 @@ IFactory::~IFactory()
 ULONG_ IFactory::AddRef()
 {
     this->count++;
-    std::cout << "\nFactory add ref count:" << this->count << std::endl;
+    std::cout << "\nFactory object " << this << " added; count:" << this->count << std::endl;
 }
 ULONG_ IFactory::Release()
 {
     this->count--;
-    std::cout << "\nFactory release count:" << this->count << std::endl;
+    std::cout << "\nFactory object " << this << " released; count:" << this->count << std::endl;
     if (this->count == 0)
     {
         delete this;
@@ -168,6 +169,7 @@ H_RESULT IFactory::CreateInstance(I_ID iid, void **ppv)
     if (iid == iid_IServ0)
     {
         EnterIntMatrix *ent = new EnterIntMatrix();
+
         ent->QueryInterface(iid, ppv);
     }
     else if (iid == iid_IServ1)

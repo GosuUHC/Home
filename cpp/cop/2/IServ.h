@@ -3,6 +3,8 @@
 class IEnterIntMatrix : public IUnknown_
 {
 public:
+  virtual void NewMemoryForIntMatrix(int **&, int, int) = 0;
+  virtual void DelMemoryForIntMatrix(int **&, int, int) = 0;
   virtual int **EnterMatrix(int, int) = 0;
 };
 
