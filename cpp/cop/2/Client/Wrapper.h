@@ -1,15 +1,13 @@
-#include "serv.h"
+#include "../Server/Serv_comp.h"
 #include <iostream>
 
-//обертка над всеми компонентами
+//обертка 
 class Server
 {
 private:
-    IFactory *fact = NULL;
+    Factory *fact = NULL;
     IEnterIntMatrix *enterMatr = NULL;
     ITransposeAndPrintAnyMatrix *TandP = NULL;
-    int n, m;
-    int **matrix;
 
 public:
     Server();

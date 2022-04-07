@@ -11,5 +11,7 @@ int main()
     serv.tranPrint();
     serv2.enter();
     serv2.tranPrint();
+    serv.tranPrint();
+
     return 0;
 }

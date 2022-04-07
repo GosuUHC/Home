@@ -4,13 +4,10 @@ Server::Server()
 {
     trace("Server construct");
     GetClassObject(clsidServ, iid_IClassFactory, (void **)&fact);
-    fact->AddRef();
 
     fact->CreateInstance(iid_IServ0, (void **)&enterMatr);
-    enterMatr->AddRef();
 
-    fact->CreateInstance(iid_IServ1, (void **)&TandP);
-    TandP->AddRef();
+    enterMatr->QueryInterface(iid_IServ1, (void**)&TandP);
 
     system("pause");
 }
@@ -18,18 +15,15 @@ Server::Server()
 void Server::enter()
 {
     trace("Entering matrix");
-    trace("Enter n, m");
-    std::cin >> n;
-    std::cin >> m;
 
-    matrix = enterMatr->EnterMatrix(n, m);
+    enterMatr->EnterMatrix();
 }
 void Server::tranPrint()
 {
-    TandP->PrintMatrix(matrix, n, m);
-    TandP->TransposeMatrix(matrix, n, m);
+    TandP->PrintMatrix();
+    TandP->TransposeMatrix();
     trace("Transposed matrix:");
-    TandP->PrintMatrix(matrix, n, m);
+    TandP->PrintMatrix();
 }
 Server::Server(const Server &other)
 {
@@ -52,19 +46,16 @@ Server &Server::operator=(const Server &other)
     {
         this->fact->Release();
         GetClassObject(clsidServ, iid_IClassFactory, (void **)&fact);
-        fact->AddRef();
     }
     if (this->enterMatr)
     {
         this->enterMatr->Release();
         fact->CreateInstance(iid_IServ0, (void **)&enterMatr);
-        enterMatr->AddRef();
     }
     if (this->TandP)
     {
         this->TandP->Release();
         fact->CreateInstance(iid_IServ1, (void **)&TandP);
-        TandP->AddRef();
     }
     return *this;
 }
@@ -72,11 +63,8 @@ Server &Server::operator=(const Server &other)
 Server::~Server()
 {
     trace("Server dest");
-    enterMatr->DelMemoryForIntMatrix(matrix, n, m);
     enterMatr->Release();
     TandP->Release();
     fact->Release();
     system("pause");
 }
-
-//переопределить оператор = для вызова addref и проследить, когда вызвается конструктор копии; задача в том, чтобы увеличить кол-во ссылок
