@@ -48,11 +48,7 @@ class MyThread extends Thread {
             while (true) {
 
                 String firstN = in.readUTF();
-                if (firstN == null) {
-                    localSocket.close();
-                    in.close();
-                    out.close();
-                }
+                
                 String what = in.readUTF();
                 String secondN = in.readUTF();
                 System.out.println("READ from client 1 :" + firstN);
@@ -76,6 +72,7 @@ class MyThread extends Thread {
                 out.flush();
 
             }
+            
             
             
         } catch (Exception e) {

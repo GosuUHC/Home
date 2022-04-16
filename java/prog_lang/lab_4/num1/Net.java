@@ -23,14 +23,7 @@ public class Net {
     }
 
     public void sendToServer(String clientData[]){
-        if (clientData == null){
-            try {
-                out.writeUTF("close!");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return;
-        }
+       
         for (String text : clientData){
             try {
                 out.writeUTF(text);

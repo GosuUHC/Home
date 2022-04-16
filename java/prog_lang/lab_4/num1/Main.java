@@ -24,7 +24,6 @@ public class Main extends Application{
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent e) {
                 System.out.println("Shutting down");
-                new Net().sendToServer(null);
                 System.exit(0);
             }
         });
