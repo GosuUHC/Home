@@ -1,14 +1,23 @@
 #include <iostream>
 #include <windows.h>
-//#include "Wrapper.h"
-#include "../Server/Serv_comp.h"
+#include "Wrapper.h"
 using namespace std;
 
-typedef H_RESULT (*FunctionType)(CLS_ID, I_ID, void **);
+// typedef H_RESULT (*FunctionType)(CLS_ID, I_ID, void **);
 
 int main()
 {
-    // может правильно, а может и нет :) ;)
+    // может правильно, а может и нет :)
+    Server serv;
+    Server serv2 = serv;
+    std::cout << &serv << std::endl;
+    std::cout << &serv2 << std::endl;
+    serv.enter();
+    serv.tranPrint();
+    serv2.enter();
+    serv2.tranPrint();
+
+    /*
     FunctionType f;
     HINSTANCE h;
     Factory *fact = NULL;
@@ -36,17 +45,8 @@ int main()
     enterMatr->Release();
     TandP->Release();
     fact->Release();
+*/
 
-    /*
-    Server serv;
-    Server serv2 = serv;
-    std::cout << &serv << std::endl;
-    std::cout << &serv2 << std::endl;
-    serv.enter();
-    serv.tranPrint();
-    serv2.enter();
-    serv2.tranPrint();
-    */
     system("pause");
     return 0;
 }

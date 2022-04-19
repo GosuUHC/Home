@@ -1,9 +1,24 @@
 #include "Wrapper.h"
+#include <windows.h>
 
 Server::Server()
 {
     trace("Server construct");
-    GetClassObject(clsidServ, iid_IClassFactory, (void **)&fact);
+    FunctionType f;
+    HINSTANCE h;
+    h = LoadLibrary("Server/Compiled/Serv_comp.dll");
+    if (!h)
+    {
+        std::cout << "no dll" << std::endl;
+    }
+
+    f = (FunctionType)GetProcAddress(h, "GetClassObject");
+    if (!f)
+    {
+        std::cout << "no dll func" << std::endl;
+    }
+
+    f(clsidServ, iid_IClassFactory, (void **)&fact);
 
     fact->CreateInstance(iid_IEnter, (void **)&enterMatr);
 

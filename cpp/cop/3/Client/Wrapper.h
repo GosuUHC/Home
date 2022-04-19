@@ -1,6 +1,8 @@
 #include "../Server/Serv_comp.h"
 #include <iostream>
 
+typedef H_RESULT (*FunctionType)(CLS_ID, I_ID, void **);
+
 //обертка
 class Server
 {
@@ -15,5 +17,5 @@ public:
     ~Server();
     void enter();
     void tranPrint();
-    //Server &operator=(const Server &other);
+    // Server &operator=(const Server &other);
 };

@@ -107,7 +107,6 @@ ULONG_ Factory::Release()
     {
         delete this;
     }
-    
 }
 
 H_RESULT Component::QueryInterface(I_ID iid, void **ppv)
