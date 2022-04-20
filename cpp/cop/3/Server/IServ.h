@@ -3,7 +3,7 @@
 class IEnterIntMatrix : public IUnknown_
 {
 public:
-  virtual void EnterMatrix() = 0;
+  virtual void EnterMatrix(int n, int m) = 0;
 };
 
 class ITransposeAndPrintAnyMatrix : public IUnknown_

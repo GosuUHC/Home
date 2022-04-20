@@ -11,7 +11,7 @@ private:
     void DelMemoryForIntMatrix();
 
 public:
-    void EnterMatrix();
+    void EnterMatrix(int n, int m);
     void TransposeMatrix();
     void PrintMatrix();
     ~Component();

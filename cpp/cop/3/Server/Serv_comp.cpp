@@ -8,9 +8,7 @@ using namespace std;
 void Component::NewMemoryForIntMatrix()
 {
     trace("\nNewMatrMemory");
-    trace("Enter n, m:");
-    std::cin >> this->n;
-    std::cin >> this->m;
+    
     matrix = new int *[n];
     for (int i = 0; i < n; i++)
     {
@@ -27,12 +25,14 @@ void Component::DelMemoryForIntMatrix()
     }
     delete[] matrix;
 }
-void Component::EnterMatrix()
+void Component::EnterMatrix(int n, int m)
 {
+    this->n = n;
+    this->m = m;
     NewMemoryForIntMatrix();
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < this->n; i++)
     {
-        for (int j = 0; j < m; j++)
+        for (int j = 0; j < this->m; j++)
         {
             std::cout << "Enter element with index:" << i << " " << j << std::endl;
             std::cin >> matrix[i][j];
@@ -157,7 +157,7 @@ H_RESULT Factory::QueryInterface(I_ID iid, void **ppv)
     AddRef();
     return S_OK__;
 }
-extern "C" H_RESULT __declspec(dllexport) GetClassObject(CLS_ID servid, I_ID IClassFactory_id, void **ppv)
+extern "C" H_RESULT __declspec(dllexport) DLLGetClassObject(CLS_ID servid, I_ID IClassFactory_id, void **ppv)
 {
     if (servid == clsidServ)
     {

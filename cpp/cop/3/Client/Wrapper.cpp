@@ -4,7 +4,7 @@
 Server::Server()
 {
     trace("Server construct");
-    FunctionType f;
+    FunctionType GetClassObject_;
     HINSTANCE h;
     h = LoadLibrary("Server/Compiled/Serv_comp.dll");
     if (!h)
@@ -12,13 +12,13 @@ Server::Server()
         std::cout << "no dll" << std::endl;
     }
 
-    f = (FunctionType)GetProcAddress(h, "GetClassObject");
-    if (!f)
+    GetClassObject_ = (FunctionType)GetProcAddress(h, "DLLGetClassObject");
+    if (!GetClassObject_)
     {
         std::cout << "no dll func" << std::endl;
     }
 
-    f(clsidServ, iid_IClassFactory, (void **)&fact);
+    GetClassObject_(clsidServ, iid_IClassFactory, (void **)&fact);
 
     fact->CreateInstance(iid_IEnter, (void **)&enterMatr);
 
@@ -30,8 +30,11 @@ Server::Server()
 void Server::enter()
 {
     trace("Entering matrix");
-
-    enterMatr->EnterMatrix();
+    trace("Enter n, m:");
+    int n, m;
+    std::cin >> n;
+    std::cin >> m;
+    enterMatr->EnterMatrix(n, m);
 }
 void Server::tranPrint()
 {
