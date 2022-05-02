@@ -1,0 +1,2 @@
+123 gggg
+12 C:\Users\Ashot\Desktop\vscprikols\cpp\cop\3\Server\Compiled\Serv_comp.dll

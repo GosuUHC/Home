@@ -14,6 +14,7 @@ public:
     void EnterMatrix(int n, int m);
     void TransposeMatrix();
     void PrintMatrix();
+    Component();
     ~Component();
     H_RESULT QueryInterface(I_ID iid, void **ppv);
     ULONG_ AddRef();

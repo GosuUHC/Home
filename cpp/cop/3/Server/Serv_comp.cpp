@@ -2,13 +2,17 @@
 #include <iostream>
 #include <iomanip>
 #include <windows.h>
+#include <fstream>
+#include <sstream>
 void trace(const char *msg) { std::cout << msg << std::endl; }
 using namespace std;
 
+int components_count = 0;
+char buffer[2048];
 void Component::NewMemoryForIntMatrix()
 {
     trace("\nNewMatrMemory");
-    
+
     matrix = new int *[n];
     for (int i = 0; i < n; i++)
     {
@@ -86,9 +90,16 @@ ULONG_ Component::Release()
 Component::~Component()
 {
     trace("\n~Component");
+    components_count--;
+    cout << "components count=" << components_count << endl;
     this->DelMemoryForIntMatrix();
 }
-
+Component::Component()
+{
+    trace("Added component");
+    components_count++;
+    cout << "components count=" << components_count << endl;
+}
 Factory::~Factory()
 {
     trace("\n~Factory");
@@ -111,6 +122,7 @@ ULONG_ Factory::Release()
 
 H_RESULT Component::QueryInterface(I_ID iid, void **ppv)
 {
+    trace("query");
     if (iid == iid_IUnknown_)
     {
         *ppv = (IUnknown_ *)(IEnterIntMatrix *)this;
@@ -132,8 +144,9 @@ H_RESULT Component::QueryInterface(I_ID iid, void **ppv)
     return S_OK__;
 }
 
-extern "C" H_RESULT __declspec(dllexport) Factory::CreateInstance(I_ID iid, void **ppv)
+H_RESULT Factory::CreateInstance(I_ID iid, void **ppv)
 {
+    trace("create");
     Component *comp = new Component();
 
     comp->QueryInterface(iid, ppv);
@@ -157,17 +170,96 @@ H_RESULT Factory::QueryInterface(I_ID iid, void **ppv)
     AddRef();
     return S_OK__;
 }
-extern "C" H_RESULT __declspec(dllexport) DLLGetClassObject(CLS_ID servid, I_ID IClassFactory_id, void **ppv)
+extern "C" H_RESULT __declspec(dllexport) DLL_GetClassObject(CLS_ID clsid, I_ID IClassFactory_id, void **ppv)
 {
-    if (servid == clsidServ)
+    if (clsid == clsidServ)
     {
-        Factory *fact = new Factory();
+        IClassFactory_ *fact = new Factory();
         fact->QueryInterface(IClassFactory_id, ppv);
+    }
+}
+
+int DelModulePath()
+{
+    ifstream file_in("manager/wheredll.txt");
+    if (!file_in)
+    {
+        return -1;
+    }
+    CLS_ID fileCLS_ID;
+    string s;
+    string filedata = "";
+
+    while (getline(file_in, s))
+    {
+        istringstream is(s, istringstream::in);
+        is >> fileCLS_ID;
+        if (fileCLS_ID != clsidServ)
+        {
+            filedata += s + "\n";
+        }
+    }
+    file_in.close();
+    ofstream file_out("manager/wheredll.txt");
+    if (!file_out)
+    {
+        return -1;
+    }
+    file_out << filedata;
+    file_out.close();
+
+    return 0;
+}
+int SetModulePath()
+{
+    DelModulePath();
+    ofstream file("manager/wheredll.txt", ios_base::app);
+    if (!file)
+    {
+        return -1;
+    }
+    file << clsidServ << " " << buffer;
+    file.close();
+    return 0;
+}
+extern "C" STDAPI __declspec(dllexport) DllRegisterServer()
+{
+    if (SetModulePath() == 0)
+    {
+        return S_OK;
+    }
+    else
+    {
+        return S_FALSE;
+    }
+}
+extern "C" STDAPI __declspec(dllexport) DllUnregisterServer()
+{
+    if (DelModulePath() == 0)
+    {
+        return S_OK;
+    }
+    else
+    {
+        return S_FALSE;
+    }
+}
+extern "C" STDAPI __declspec(dllexport) DllCanUnloadNow()
+{
+    if (components_count == 0)
+    {
+        return S_OK;
+    }
+    else
+    {
+        return S_FALSE;
     }
 }
 
 BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
+    GetModuleFileName(hinstDLL, buffer, sizeof(buffer));
+    std::cout << buffer << std::endl;
     switch (fdwReason)
     {
     case DLL_PROCESS_ATTACH:

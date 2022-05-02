@@ -1,26 +1,24 @@
 #include "Wrapper.h"
 #include <windows.h>
+void trace(const char *msg) { std::cout << msg << std::endl; }
+HINSTANCE h;
 
 Server::Server()
 {
     trace("Server construct");
-    FunctionType GetClassObject_;
-    HINSTANCE h;
-    h = LoadLibrary("Server/Compiled/Serv_comp.dll");
+    FunctionType Co_create_instance;
+    h = LoadLibrary("manager/compiled/manager.dll");
     if (!h)
     {
         std::cout << "no dll" << std::endl;
     }
 
-    GetClassObject_ = (FunctionType)GetProcAddress(h, "DLLGetClassObject");
-    if (!GetClassObject_)
+    Co_create_instance = (FunctionType)GetProcAddress(h, "Co_CreateInstance");
+    if (!Co_create_instance)
     {
         std::cout << "no dll func" << std::endl;
     }
-
-    GetClassObject_(clsidServ, iid_IClassFactory, (void **)&fact);
-
-    fact->CreateInstance(iid_IEnter, (void **)&enterMatr);
+    Co_create_instance(clsidServ, iid_IClassFactory, (void **)&enterMatr);
 
     enterMatr->QueryInterface(iid_ITandP, (void **)&TandP);
 
@@ -46,8 +44,6 @@ void Server::tranPrint()
 Server::Server(const Server &other)
 {
     trace("Copy constructor");
-    fact = other.fact;
-    fact->AddRef();
     enterMatr = other.enterMatr;
     enterMatr->AddRef();
     TandP = other.TandP;
@@ -83,6 +79,6 @@ Server::~Server()
     trace("Server dest");
     enterMatr->Release();
     TandP->Release();
-    fact->Release();
+    FreeLibrary(h);
     system("pause");
 }

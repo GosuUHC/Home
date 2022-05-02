@@ -1,13 +1,13 @@
-#include "../Server/Serv_comp.h"
 #include <iostream>
+#include "../manager/manager.h"
 
 typedef H_RESULT (*FunctionType)(CLS_ID, I_ID, void **);
+void trace(const char *msg);
 
 //обертка
 class Server
 {
 private:
-    Factory *fact = NULL;
     IEnterIntMatrix *enterMatr = NULL;
     ITransposeAndPrintAnyMatrix *TandP = NULL;
 

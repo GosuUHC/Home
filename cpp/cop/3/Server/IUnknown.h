@@ -7,6 +7,7 @@ const I_ID iid_IEnter = 1;
 const I_ID iid_ITandP = 2;
 const I_ID iid_IClassFactory = 5;
 const H_RESULT S_OK__ = 1000;
+const H_RESULT S_FALSE__ = -1000;
 const H_RESULT E_NOINTERFACE__ = -1;
 const CLS_ID clsidServ = 12;
 
