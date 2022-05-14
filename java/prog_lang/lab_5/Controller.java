@@ -1,38 +1,38 @@
 package lab_5;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class Controller {
     @FXML
-    Button selectAll;
-    @FXML
-    Button update;
-    @FXML
-    Button delete;
-    @FXML
-    Button insert;
+    Button filter;
 
     @FXML
-    TextField updateId;
+    TextField filterData;
+    
     @FXML
-    TextField updateName;
+    TableView<Department> deptTable;
     @FXML
-    TextField deleteid;
-    @FXML
-    TextField insertId;
-    @FXML
-    TextField insertName;
+    static TableView<Department> deptTableCopy;
 
-    @FXML
-    TableView deptTable;
 
     @FXML
     TableColumn<Department, Integer> deptIdCol;
@@ -44,15 +44,74 @@ public class Controller {
     void initialize() {
         deptIdCol.setCellValueFactory(cellData -> cellData.getValue().deptIdProperty().asObject());
         deptNameCol.setCellValueFactory(cellData -> cellData.getValue().deptNameProperty());
+
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem act1 = new MenuItem("Insert");
+        contextMenu.getItems().add(act1);
+
+        MenuItem act2 = new MenuItem("Update");
+        contextMenu.getItems().add(act2);
+
+        MenuItem act3 = new MenuItem("Delete");
+        contextMenu.getItems().add(act3);
+
+        deptTable.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent click) {
+                if (click.getButton() == MouseButton.SECONDARY) {
+                    contextMenu.show(deptTableCopy, click.getScreenX(), click.getScreenY());
+                }
+            }
+        });
+
+        act1.setOnAction(event -> {
+            try {
+                insertDept();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        act2.setOnAction(event -> {
+            try {
+                updateDeptName();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+
+        act3.setOnAction(event -> {
+            try {
+                deleteDept();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+        deptTableCopy = deptTable;
+        try {
+            refresh();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    void populateDepartment(ObservableList<Department> deptData) throws ClassNotFoundException {
-        deptTable.setItems(deptData);
+    static void populateDepartment(ObservableList<Department> deptData) throws ClassNotFoundException {
+        deptTableCopy.setItems(deptData);
     }
 
     @FXML
-    void searchDepartment(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
+    public static void refresh() throws ClassNotFoundException, SQLException {
         try {
             ObservableList<Department> deptData = DepartmentDAO.searchDepartments();
             populateDepartment(deptData);
@@ -63,9 +122,15 @@ public class Controller {
     }
 
     @FXML
-    void updateDeptName(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    void filterDepartments(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         try {
-            DepartmentDAO.updateDeptName(updateId.getText(), updateName.getText());
+            String query = filterData.getText();
+            if (query == ""){
+                refresh();
+                return;
+            }
+            ObservableList<Department> deptData = DepartmentDAO.filterDepartments(query);
+            populateDepartment(deptData);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw e;
@@ -73,19 +138,48 @@ public class Controller {
     }
 
     @FXML
-    void insertDept(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    void updateDeptName() throws ClassNotFoundException, IOException {
         try {
-            DepartmentDAO.insertDept(insertId.getText(), insertName.getText());
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/updateView.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(deptTable.getScene().getWindow());
+            stage.show();
+            refresh();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void insertDept() throws ClassNotFoundException, IOException {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/insertView.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(deptTable.getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
             System.out.println(e.getMessage());
             throw e;
         }
     }
+
     @FXML
-    void deleteDept(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        try{
-            DepartmentDAO.deleteDeptWithId(deleteid.getText());
-        }catch (SQLException e) {
+    void deleteDept() throws SQLException, ClassNotFoundException {
+        try {
+            String id = String.valueOf(deptTable.getSelectionModel().getSelectedItem().getDeptId());
+            DepartmentDAO.deleteDeptWithId(id);
+            refresh();
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw e;
         }

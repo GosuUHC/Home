@@ -46,6 +46,21 @@ public class DepartmentDAO {
         }
     }
 
+    public static ObservableList<Department> filterDepartments(String selectData)
+            throws SQLException, ClassNotFoundException {
+
+        String select = "select * from department where " + selectData;  
+        try {
+            ResultSet rsDepts = DBUtil.dbExecuteQuery(select);
+            ObservableList<Department> deptlist = getDepartmentsList(rsDepts);
+            return deptlist;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+
+    }
+
     public static ObservableList<Department> getDepartmentsList(ResultSet rs)
             throws SQLException, ClassNotFoundException {
         // A list that allows listeners to track changes when they occur.
@@ -94,4 +109,3 @@ public class DepartmentDAO {
         }
     }
 }
-
