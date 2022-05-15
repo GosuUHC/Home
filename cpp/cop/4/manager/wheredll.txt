@@ -1,0 +1,3 @@
+123 gggg
+12 C:\Users\Ashot\Desktop\vscprikols\cpp\cop\4\Server\Compiled\Serv_comp.dll
+22 C:\Users\Ashot\Desktop\vscprikols\cpp\cop\4\Server\Compiled\Wrapper_comp.dll
