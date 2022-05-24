@@ -1,7 +1,7 @@
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 from datetime import datetime
 
-token = "5241879340:AAFyAkk5xJpTpyyl2WsIVp5OLTCmqZtWo2U"
+token = ""
 
 def num1():
 
