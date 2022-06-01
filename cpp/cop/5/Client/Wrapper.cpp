@@ -5,8 +5,9 @@ void trace(const char *msg) { std::cout << msg << std::endl; }
 Server::Server()
 {
     trace("Server construct");
-    //CoInitialize(NULL);
+    CoInitialize(NULL);
     HRESULT res = CoCreateInstance(clsidServ, NULL, CLSCTX_INPROC_SERVER, iid_IEnter, (void **)&enterMatr);
+    std::cout << res << std::endl;
     if (!SUCCEEDED(res))
     {
         std::cout << "ERROR CoCreateInstance!" << std::endl;

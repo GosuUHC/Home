@@ -167,9 +167,7 @@ HRESULT __stdcall Factory::CreateInstance(IUnknown *pUnknownOuter, const IID &ii
     trace("create");
     Component *comp = new Component();
 
-    HRESULT res = comp->QueryInterface(iid, ppv);
-    ///////////comp->Release()?????
-    return res;
+    return comp->QueryInterface(iid, ppv);
 }
 
 HRESULT __stdcall Factory::QueryInterface(const IID &iid, void **ppv)
@@ -192,12 +190,12 @@ HRESULT __stdcall Factory::QueryInterface(const IID &iid, void **ppv)
 }
 HRESULT __declspec(dllexport) GetClassObject(const CLSID &clsid, const IID &IClassFactory_id, void **ppv)
 {
-    if (clsid == clsidServ)
+    if (clsid != clsidServ)
     {
         ppv = NULL;
         return E_NOTIMPL;
     }
-    IClassFactory *fact = new Factory();
+    Factory *fact = new Factory();
     HRESULT res = fact->QueryInterface(IClassFactory_id, ppv);
     return res;
 }
