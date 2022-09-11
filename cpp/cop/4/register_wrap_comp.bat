@@ -1,1 +1,0 @@
-regsvr32 Server/Compiled/Wrapper_comp.dll

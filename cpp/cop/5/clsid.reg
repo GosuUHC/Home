@@ -1,7 +1,0 @@
-Windows Registry Editor Version 5.00
-
-
-[HKEY_CLASSES_ROOT\CLSID\{92A42CAA-2577-4E80-934E-07DE64502FD6}]
-
-[HKEY_CLASSES_ROOT\CLSID\{92A42CAA-2577-4E80-934E-07DE64502FD6}\InprocServer32]
-@="C:\\Users\\ISeven\\Desktop\\vscprikols\\cpp\\cop\\5\\Server\\Compiled\\Serv_comp.dll"

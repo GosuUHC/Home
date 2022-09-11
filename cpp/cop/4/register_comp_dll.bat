@@ -1,1 +1,0 @@
-regsvr32 Server/Compiled/Serv_comp.dll
