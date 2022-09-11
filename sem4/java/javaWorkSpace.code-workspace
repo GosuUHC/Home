@@ -1,0 +1,28 @@
+{
+    "folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.project.sourcePaths": [
+			"prog_lang"
+		],
+		"java.dependency.syncWithFolderExplorer": true,
+		"java.dependency.packagePresentation": "hierarchical",
+		"maven.view": "hierarchical",
+		"java.project.outputPath": "comp\\lab4",
+		"java.project.referencedLibraries": [
+			"lib/**/*.jar",
+			"prog_lang\\lab_4\\Libs\\javafx\\lib\\javafx.base.jar",
+			"prog_lang\\lab_4\\Libs\\javafx\\lib\\javafx.controls.jar",
+			"prog_lang\\lab_4\\Libs\\javafx\\lib\\javafx.fxml.jar",
+			"prog_lang\\lab_4\\Libs\\javafx\\lib\\javafx.graphics.jar",
+			"prog_lang\\lab_4\\Libs\\javafx\\lib\\javafx.media.jar",
+			"prog_lang\\lab_4\\Libs\\javafx\\lib\\javafx.swing.jar",
+			"prog_lang\\lab_4\\Libs\\javafx\\lib\\javafx.web.jar",
+			"prog_lang\\lab_4\\Libs\\javafx\\lib\\javafx-swt.jar",
+			"prog_lang\\lab_5\\ojdbc11.jar"
+		]
+	}
+}
