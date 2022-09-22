@@ -81,3 +81,6 @@ def num6():
     plt.scatter(x, y, color="red")
 
     plt.show()
+
+
+num6()
