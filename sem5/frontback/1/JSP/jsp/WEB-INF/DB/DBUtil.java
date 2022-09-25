@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
 public class DBUtil {
 
     static Connection conn = null;
@@ -41,6 +40,4 @@ public class DBUtil {
         }
     }
 
-    
-    
 }

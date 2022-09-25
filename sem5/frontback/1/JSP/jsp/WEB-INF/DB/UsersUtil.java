@@ -54,13 +54,7 @@ public class UsersUtil {
     }
 
     public static void deleteUserRow(String data[]) throws SQLException, ClassNotFoundException {
-        String update = "delete from userdata";
-        StringBuilder upBuilder = new StringBuilder(update);
-        upBuilder.append("where userlogin = ?");
-        upBuilder.append("and surname = ?");
-        upBuilder.append("and name = ?");
-        upBuilder.append("and middlename = ?");
-        upBuilder.append("and count = ?");
+        String update = "delete from userdata where userlogin = ? and surname = ? and name = ? and middlename = ? and count = ?";
 
         PreparedStatement ps = DBUtil.getConnection().prepareStatement(update);
         for (int i = 1; i <= data.length; i++) {

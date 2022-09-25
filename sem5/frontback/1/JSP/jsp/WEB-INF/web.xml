@@ -35,5 +35,14 @@
      /adding
     </url-pattern>
    </servlet-mapping>
+
+   <servlet-mapping>
+    <servlet-name>
+     WebController
+    </servlet-name>
+    <url-pattern>
+     /delete
+    </url-pattern>
+   </servlet-mapping>
    
 </web-app>

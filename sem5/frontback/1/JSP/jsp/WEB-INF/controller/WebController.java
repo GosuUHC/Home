@@ -2,7 +2,10 @@ package controller;
 
 import java.io.PrintWriter;
 
-import DB.UsersUtil;
+import controller.backController.AddingController;
+import controller.backController.AuthController;
+import controller.backController.DelController;
+import controller.backController.MainController;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,17 +21,20 @@ public class WebController extends HttpServlet {
 		}
 		String servletPath = request.getServletPath();
 
+		IBack backController;
+
 		if (servletPath.equals("/auth")) {
 			forwardJSP("auth", request, response, printWriter);
 
 		} else if (servletPath.equals("/main")) {
 
 			if (isFirstConnection(request, response)) {
-				forwardJSP("auth", request, response, printWriter);
+				backController = new AuthController();
 
 			} else {
-				forwardJSP("main", request, response, printWriter);
+				backController = new MainController();
 			}
+			backController.action(request, response);
 
 		} else if (servletPath.equals("/adding")) {
 			if (isFirstConnection(request, response)) {
@@ -36,6 +42,7 @@ public class WebController extends HttpServlet {
 
 			} else {
 				forwardJSP("adding", request, response, printWriter);
+				
 			}
 
 		} else {
@@ -63,42 +70,32 @@ public class WebController extends HttpServlet {
 		}
 
 		try {
-			HttpSession session = request.getSession(true);
-
-			Object login = request.getParameter("loginForm");
-			Object password = request.getParameter("passwordForm");
 
 			String servletPath = request.getServletPath();
+			IBack BackController;
 
 			if (servletPath.equals("/adding")) {
-				String[] attrs = new String[5];
-				attrs[0] = (String) session.getAttribute("logg");
-				attrs[1] = (String) request.getParameter("addingSurname");
-				attrs[2] = (String) request.getParameter("addingName");
-				attrs[3] = (String) request.getParameter("addingMiddleName");
-				attrs[4] = (String) request.getParameter("addingCount");
-
-				UsersUtil.insertUserData(attrs);
-
-				forwardJSP("main", request, response, printWriter);
+				forwardJSP("adding", request, response, printWriter);
+				BackController = new AddingController();
+				BackController.action(request, response);
 				return;
 			}
 
 			if (servletPath.equals("/delete")) {
-				// Str
-				// UsersUtil.deleteUserRow(number);
-			}
-
-			if (UsersUtil.authorize((String) login, (String) password)) {
-				session.setAttribute("logg", login);
-				session.setAttribute("passs", password);
-				
-				forwardJSP("main", request, response, printWriter);
+				BackController = new DelController();
+				BackController.action(request, response);
+				BackController = new MainController();
+				BackController.action(request, response);
 				return;
 			}
-			printWriter.write("INVALID USER OR PASSWORD");
-			session.removeAttribute("logg");
-			session.removeAttribute("passs");
+
+			if (servletPath.equals("/main")) {
+				BackController = new AuthController();
+				BackController.action(request, response);
+				BackController = new MainController();
+				BackController.action(request, response);
+				return;
+			}
 
 		} catch (Exception ex) {
 			printWriter.println("Error: " + ex.getMessage());
