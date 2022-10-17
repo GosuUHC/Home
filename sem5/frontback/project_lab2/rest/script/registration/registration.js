@@ -8,6 +8,10 @@ function initReg() {
 
     regBtn.addEventListener("click", register)
 
+    // Go back button
+    var goBackBtn = document.getElementById("goBackBtn");
+    goBackBtn.addEventListener("click", initLogin);
+
 }
 
 function register() {

@@ -1,4 +1,4 @@
-package logic.Authentication;
+package logic.authentication;
 
 import java.io.UnsupportedEncodingException;
 

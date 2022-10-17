@@ -1,4 +1,4 @@
-package DB.POJO;
+package db.pojo;
 
 import java.sql.ResultSet;
 

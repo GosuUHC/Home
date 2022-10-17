@@ -1,4 +1,4 @@
-package DB.POJO;
+package db.pojo;
 
 public class Order {
     int id;

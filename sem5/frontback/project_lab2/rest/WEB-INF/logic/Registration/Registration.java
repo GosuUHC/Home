@@ -1,8 +1,8 @@
-package logic.Registration;
+package logic.registration;
 
 import java.sql.SQLException;
 
-import DB.UsersUtil;
+import db.UsersUtil;
 
 public class Registration {
 

@@ -1,6 +1,6 @@
-package DB.POJO.Factory.ItemFactory;
+package db.pojo.factory.ItemFactory;
 
-import DB.POJO.Item;
+import db.pojo.Item;
 
 public interface IItemFactory {
     public Item createItem(String type);

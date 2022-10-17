@@ -1,4 +1,4 @@
-package logic.Authentication;
+package logic.authentication;
 
 public class Token {
     public static boolean checkToken(String login, String token) {

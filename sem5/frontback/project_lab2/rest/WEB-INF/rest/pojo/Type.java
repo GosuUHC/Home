@@ -1,4 +1,4 @@
-package rest;
+package rest.pojo;
 
 public class Type {
     String type;

@@ -1,6 +1,6 @@
-package rest.Token;
+package rest.token;
 
-import logic.Authentication.Token;
+import logic.authentication.Token;
 
 public class TokenREST {
 

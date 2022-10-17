@@ -15,9 +15,6 @@ function myXmlRequest(method, uri, object = {}, func) {
 
     var body = JSON.stringify(object);
 
-    console.log(object);
-    console.log(body);
-
 
     xhr.onreadystatechange = function () {
         if (this.readyState !== 4) { return; }
@@ -33,7 +30,7 @@ function myXmlRequest(method, uri, object = {}, func) {
                 response = JSON.parse(response);
                 console.log(response);
             } catch (e) {
-                alert(e);
+                console.log(e);
             }
         }
 

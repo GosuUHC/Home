@@ -1,6 +1,6 @@
-package logic.Authentication;
+package logic.authentication;
 
-import DB.UsersUtil;
+import db.UsersUtil;
 
 public class Auth {
 

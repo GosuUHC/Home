@@ -1,10 +1,10 @@
-package DB.POJO.Factory.ItemFactory;
+package db.pojo.factory.ItemFactory;
 
-import DB.POJO.CPU;
-import DB.POJO.GPU;
-import DB.POJO.Item;
-import DB.POJO.Motherboard;
-import DB.POJO.RAM;
+import db.pojo.CPU;
+import db.pojo.GPU;
+import db.pojo.Item;
+import db.pojo.Motherboard;
+import db.pojo.RAM;
 
 public class ItemFactory implements IItemFactory {
 

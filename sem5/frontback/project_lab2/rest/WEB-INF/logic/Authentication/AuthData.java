@@ -1,4 +1,4 @@
-package logic.Authentication;
+package logic.authentication;
 
 public class AuthData {
 

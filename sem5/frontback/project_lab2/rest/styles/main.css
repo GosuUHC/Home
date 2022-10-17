@@ -2,3 +2,9 @@
 .active {
     background-color: #337ab7;
 }
+
+
+.delBtnDiv:hover {
+    color: rgb(74, 182, 146);
+    cursor: pointer;
+}

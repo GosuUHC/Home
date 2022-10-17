@@ -1,13 +1,15 @@
-package DB;
+package db;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DB.POJO.Item;
-import DB.POJO.Order;
-import DB.POJO.Factory.ItemFactory.ItemFactory;
+import db.pojo.Item;
+import db.pojo.Order;
+import db.pojo.factory.ItemFactory.ItemFactory;
 
 public class UsersUtil {
 
@@ -15,14 +17,13 @@ public class UsersUtil {
         String query = "select * from orders where user_login = ?";
         PreparedStatement ps = DBUtil.getConnection().prepareStatement(query);
         ps.setString(1, login);
-
+        ResultSet rsUserData = null;
         try {
-            ResultSet rsUserData = ps.executeQuery();
-
+            rsUserData = ps.executeQuery();
             return rsUserData;
         } catch (SQLException e) {
             throw e;
-        }
+        } 
     }
 
     public static ArrayList<Order> getOrdersPojo(String login) throws SQLException, ClassNotFoundException {
@@ -41,7 +42,12 @@ public class UsersUtil {
 
             ordersList.add(order);
         }
+        DBUtil.dbDisconnect();
         return ordersList;
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        System.out.println(getOrdersPojo("user1"));
     }
 
     public static Item getPartById(int id, String type) throws SQLException {
@@ -56,11 +62,14 @@ public class UsersUtil {
                 ItemFactory itemFactory = ItemFactory.getFactoryObject();
                 item = itemFactory.createItem(type);
                 item.setAll(rsUserData);
+                
                 return item;
             }
 
         } catch (SQLException e) {
             throw e;
+        } finally {
+            DBUtil.dbDisconnect();
         }
         return null;
     }
@@ -82,7 +91,48 @@ public class UsersUtil {
 
         } catch (SQLException e) {
             throw e;
+        } finally {
         }
+    }
+
+    public static void addOrder(String user, int itemid, String itemCount, String itemType)
+            throws SQLException, NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException {
+
+        String update = "insert into orders values (?, ?, ?, ?, ?, ?)";
+        String query = "select max(id) from orders"; // get maxid
+        PreparedStatement ps = DBUtil.getConnection().prepareStatement(query);
+        ResultSet idSet = ps.executeQuery();
+        if (idSet.next()) {
+            int newId = idSet.getInt(1) + 1;
+            Item item = getPartById(itemid, itemType);
+
+            // reflect
+            Method method = item.getClass().getDeclaredMethod("getPrice");
+            String price = (String) method.invoke(item);
+            // reflect end
+
+            String finalPrice = String.valueOf(Integer.valueOf(price) * Integer.valueOf(itemCount));
+
+            ps = DBUtil.getConnection().prepareStatement(update);
+            ps.setInt(1, newId);
+            ps.setString(2, user);
+            ps.setInt(3, itemid);
+            ps.setString(4, itemCount);
+            ps.setString(5, finalPrice);
+            ps.setString(6, itemType);
+            ps.executeUpdate();
+
+        }
+
+    }
+
+    public static void deleteOrder(int id) throws SQLException {
+        String update = "delete from orders where id = ?";
+        PreparedStatement ps = DBUtil.getConnection().prepareStatement(update);
+        ps.setInt(1, id);
+
+        ps.executeUpdate();
     }
 
     public static boolean authorizeDB(String login, String password) throws SQLException, ClassNotFoundException {
@@ -99,6 +149,8 @@ public class UsersUtil {
             return false;
         } catch (SQLException e) {
             throw e;
+        } finally {
+            DBUtil.dbDisconnect();   
         }
     }
 

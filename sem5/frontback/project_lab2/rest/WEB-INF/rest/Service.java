@@ -3,24 +3,28 @@ package rest;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DB.UsersUtil;
-import DB.POJO.Item;
-import DB.POJO.Order;
+import db.UsersUtil;
+import db.pojo.Item;
+import db.pojo.Order;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
-import logic.Authentication.Auth;
-import logic.Authentication.AuthData;
-import logic.Registration.Registration;
-import rest.Token.TokenREST;
+import logic.authentication.Auth;
+import logic.authentication.AuthData;
+import logic.registration.Registration;
+import rest.pojo.Id;
+import rest.pojo.Type;
+import rest.pojo.idTypeAndCount;
+import rest.token.TokenREST;
 
 @Path("/")
 public class Service {
@@ -104,9 +108,11 @@ public class Service {
         String token = httpHeaders.getHeaderString("Token");
         ArrayList<Order> ordersList;
         String resultJSON;
+
         if (!TokenREST.checkToken(login, token)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+
         try {
             ordersList = UsersUtil.getOrdersPojo(login);
             resultJSON = jsonb.toJson(ordersList);
@@ -119,6 +125,61 @@ public class Service {
 
     }
 
+    
+    @POST
+    @Path("/orders")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response createNewOrder(String itemidTypeAndCount, @Context HttpHeaders httpHeaders) {
+        Jsonb jsonb = JsonbBuilder.create();
+        String login = httpHeaders.getHeaderString("Name");
+        String token = httpHeaders.getHeaderString("Token");
+
+        if (!TokenREST.checkToken(login, token)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
+        idTypeAndCount idTypeCount = jsonb.fromJson(itemidTypeAndCount, idTypeAndCount.class);
+
+        try {
+            UsersUtil.addOrder(login, idTypeCount.getId(), idTypeCount.getCount(), idTypeCount.getType());
+        } catch (SQLException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
+        return Response.ok("Order added").build();
+
+    }
+
+    
+    @PUT
+    @Path("/orders")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response deleteOrder(String idd, @Context HttpHeaders httpHeaders) {
+        Jsonb jsonb = JsonbBuilder.create();
+        String login = httpHeaders.getHeaderString("Name");
+        String token = httpHeaders.getHeaderString("Token");
+
+        if (!TokenREST.checkToken(login, token)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        try {
+            Id idt = jsonb.fromJson(idd, Id.class);
+            UsersUtil.deleteOrder(idt.getId());
+
+            return Response.ok("ORDER DELETED").build();
+        } catch (JsonbException e) {
+            return Response.serverError().build();
+        } catch (SQLException e) {
+            return Response.status(404).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
+    }
+    
+    
     @POST
     @Path("/items")
     @Consumes("application/json")
