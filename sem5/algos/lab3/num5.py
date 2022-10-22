@@ -104,7 +104,6 @@ class DoubleList:
             self.addFront(item)
             return
 
-        temp = Node(item)
         current = self.head
         index = 0
         while index < pos:
@@ -112,13 +111,14 @@ class DoubleList:
             if current.getNext():
                 current = current.getNext()
 
+        temp = Node(item)
         prev = current.getPrev()
-
+        temp.setPrev(prev)
         prev.setNext(temp)
         temp.setNext(current)
+        current.setPrev(temp)
 
     def insert_after(self, item, pos):
-        temp = Node(item)
         current = self.head
         index = 0
         while index < pos:
@@ -126,9 +126,40 @@ class DoubleList:
             if current.getNext():
                 current = current.getNext()
 
+        temp = Node(item)
         next = current.getNext()
-        current.setNext(temp)
         temp.setNext(next)
+        temp.setPrev(current)
+        if next:
+            next.setPrev(temp)
+        current.setNext(temp)
+
+    def get_node(self, pos):
+        current = self.head
+        index = 0
+        if current == None:
+            return None
+
+        while index < pos:
+            index += 1
+            if current.getNext():
+                current = current.getNext()
+
+        return current
+
+    def del_node(self, node: Node):
+        current = self.head
+        if current == None:
+            return
+
+        while current.getNext():
+            if node == current:
+                next = current.getNext()
+                prev = current.getPrev()
+                next.setPrev(prev)
+                prev.setNext(next)
+
+            current = current.getNext()
 
     def __str__(self):
         return_string = "["
@@ -202,4 +233,11 @@ if __name__ == "__main__":
 
     print("insert_after(400, 0)")
     mylist.insert_after(400, 0)
+    print(mylist)
+
+    print("del_node(node)")
+    print("node data = ", end="")
+    node = mylist.get_node(2)
+    print(node.getData())
+    mylist.del_node(node)
     print(mylist)

@@ -1,5 +1,4 @@
 from num1 import UnorderedList
-from list_collections import Stack as StackList, Queue as QueueList, Deque as DequeList
 
 
 class StackUnorderedList:
@@ -22,6 +21,8 @@ class StackUnorderedList:
         return self.items.size()
 
     def __str__(self):
+        if self.items.head == None:
+            return "[]"
         return "Stack: \n" + self.items.__str__()
 
 
