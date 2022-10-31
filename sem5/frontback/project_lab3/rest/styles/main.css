@@ -1,0 +1,33 @@
+.active {
+    background-color: #337ab7;
+}
+
+.delBtnDiv {
+    color: rgb(30, 126, 223);
+    width: auto;
+    height: auto;
+}
+
+.delBtnDiv:hover {
+    color: rgb(198, 146, 50);
+    cursor: pointer;
+}
+
+.mainTableDivItem {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20px;
+}
+
+.itemContent {
+    display: grid;
+    grid-template-columns: 600px 75px 30fr;
+
+}
+
+.catalogue {
+    display: grid;
+    position: relative;
+    display: flex;
+    grid-template-columns: 100px 300px 75px 75px;
+}
