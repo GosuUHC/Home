@@ -28,9 +28,20 @@ function filterItemData(itemText) {
     return { itemid, itemType };
 }
 
+function validateItemCount(count) {
+    try {
+        let num = parseInt(count);
+        if (num != null && num != undefined && num > 0 && num < 11) {
+            return true;
+        }
+
+    } catch (err) { return false; }
+}
+
 export {
     getPageCartItemsList,
     addPageCartItem,
     deletePageCartItems,
     filterItemData,
+    validateItemCount,
 };

@@ -8,6 +8,7 @@ import {
     addPageCartItem,
     deletePageCartItems,
     filterItemData,
+    validateItemCount,
 } from "../../../model/main/itemCart/modelItemCart.js";
 import { TableElement } from "../../../model/main/modelMain.js";
 import { addNewOrders } from "../orders/pageOrders.js";
@@ -29,14 +30,17 @@ function init() {
     addOrderBtn.value = "Add to orders";
     addOrderBtn.addEventListener("click", collectNewOrder);
     table.appendChild(addOrderBtn);
+
+    let itemCounts = document.getElementsByClassName("itemCountValue");
+
 }
 
 function fillItemCart() {
     getPageCartItemsList().then(itemsList => {
         itemsList.forEach(elem => {
-            let tableElement = new TableElement();
-            tableElement.set(elem);
-            renderPageCartItem(tableElement);
+            let item = new TableElement();
+            item.set(elem);
+            renderPageCartItem(item);
         });
     });
 }
@@ -88,9 +92,16 @@ function renderPageCartItem(item) { // TableElement instance
                     </div>
 
                 </div>
+                
                 <div class="itemPrice">
                     <span> ${itemCount * item.getField("price")} P</span>
                 </div>
+
+                <article class="itemActions">
+                    <div class="itemCountAction">
+                        <input class="itemCountValue" type="number" min="1" max="10" value="1">
+                    </div>
+                </article>
                 
             </div>
 
@@ -123,9 +134,8 @@ function collectNewOrder() {
         }
 
         let itemText = checkbox.parentElement.parentElement.outerText;
+        let itemCount = checkbox.parentElement.parentElement.children[2].children[2].children[0].firstElementChild.value;
         let { itemid, itemType } = filterItemData(itemText);
-
-        let itemCount = 1; // = input.value .....
 
         addNewOrders(itemid, itemType, itemCount);
     }
