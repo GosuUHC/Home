@@ -100,6 +100,7 @@ def evaluate(parseTree):
     else:
         return parseTree.getRootVal()
 
+
 def printexp(tree):
     leftC = tree.getLeftChild()
     rightC = tree.getRightChild()

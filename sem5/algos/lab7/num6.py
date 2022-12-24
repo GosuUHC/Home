@@ -58,23 +58,25 @@ class PriorityNode:
 
     def __lt__(self, other):
         return self.priority < other.priority
-    
+
     def __gt__(self, other):
         return self.priority > other.priority
-    
+
     def __repr__(self):
         return str(self.data)
-    
+
+
 class PriorityQueue:
     def __init__(self):
         self.data = BinHeap()
-        
+
     def enqueue(self, item, priority):
         self.data.insert(PriorityNode(item, priority))
-        
+
     def dequeue(self):
         return self.data.delMin().data
-    
+
+
 pq = PriorityQueue()
 
 pq.enqueue("prior 1", 1)

@@ -17,7 +17,7 @@ class BinHeap:
         self.currentSize = self.currentSize + 1
         self.percUp(self.currentSize)
         self.checkLowPrior()
-        
+
     def checkLowPrior(self):
         while self.currentSize > self.size_limit:
             self.heapList.remove(max(self.heapList))
