@@ -16,7 +16,7 @@ async function fetchWrapper(
 
   let options = { method, headers };
 
-  if (method == "GET" || method == "DELETE") {
+  if (method === "GET" || method === "DELETE") {
     for (let key in filter) {
       headers[key] = filter[key];
     }

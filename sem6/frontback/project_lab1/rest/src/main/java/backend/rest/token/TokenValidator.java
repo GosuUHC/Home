@@ -4,10 +4,10 @@ import java.security.Key;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 
 class TokenValidator {
     private Key key;
@@ -16,13 +16,14 @@ class TokenValidator {
         key = lKey;
     }
 
-    public String validate(String token) {
+    public boolean validate(String token) {
         try {
-            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return claims.getBody().getSubject();
+            Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+            String regenToken = TokenIssuerFactory.createInstance().issueToken(claims);
+            return token.equals(regenToken);
         } catch (ExpiredJwtException | MalformedJwtException | UnsupportedJwtException
-                | IllegalArgumentException e) {
-            return "UNMATCHED ROLE";
+                | IllegalArgumentException | SignatureException e) {
+            return false;
         }
     }
 }

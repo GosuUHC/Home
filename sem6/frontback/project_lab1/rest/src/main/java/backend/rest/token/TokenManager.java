@@ -1,17 +1,17 @@
 package backend.rest.token;
 
-public class TokenREST implements ITokenManager {
+public class TokenManager implements ITokenManager {
 
     private TokenIssuer tokenIssuer;
     private TokenValidator tokenValidator;
 
-    public TokenREST() { // singletons
+    public TokenManager() { // singletons
         this.tokenIssuer = TokenIssuerFactory.createInstance();
         this.tokenValidator = TokenValidatorFactory.createInstance();
     }
 
-    public boolean checkToken(String login, String token) {
-        return login.equals(tokenValidator.validate(token));
+    public boolean checkToken(String token) {
+        return tokenValidator.validate(token);
     }
 
     @Override

@@ -13,12 +13,12 @@ class CompAuth extends React.Component {
         <TextField
           type="text"
           placeholder="Login"
-          onChange={(event) => this.props.onChangeLogin(event.target.value)}
+          onChange={(e) => this.props.onChangeLogin(e.target.value)}
         ></TextField>
         <TextField
           type="password"
           placeholder="Password"
-          onChange={(event) => this.props.onChangePassword(event.target.value)}
+          onChange={(e) => this.props.onChangePassword(e.target.value)}
         ></TextField>
         <Button onClick={this.props.proceedAuth} name="Login"></Button>
       </div>

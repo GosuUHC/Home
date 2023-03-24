@@ -3,14 +3,9 @@ import Button from "../../common/button.js";
 import TextField from "../../common/textField.js";
 
 class CompRegistration extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>
-        <Button name="Go back" navigatePath="/auth"></Button>
         <br></br>
         <TextField
           type="text"
@@ -25,7 +20,9 @@ class CompRegistration extends React.Component {
         <TextField
           type="text"
           placeholder="Password check"
-          onChange={(event) => this.props.onChangePasswordCheck(event.target.value)}
+          onChange={(event) =>
+            this.props.onChangePasswordCheck(event.target.value)
+          }
         ></TextField>
         <Button
           name="Register"

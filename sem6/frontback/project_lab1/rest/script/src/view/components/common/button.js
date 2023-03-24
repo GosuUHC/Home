@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 function Button(props) {
   const navigate = useNavigate();
-  let propsClick = props.onClick ? props.onClick : () => {}; 
+  let propsClick = props.onClick ? props.onClick : () => {};
   const onClick =
     props.navigatePath !== null && props.navigatePath !== undefined
       ? () => {

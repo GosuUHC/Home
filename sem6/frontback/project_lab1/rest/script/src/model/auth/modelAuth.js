@@ -1,14 +1,11 @@
 import { sendAuthData, logout } from "../../transport/auth/transportAuth";
 
 function proceedAuth(login, password) {
-    return sendAuthData(login, password);
+  return sendAuthData(login, password);
 }
 
 function proceedLogout() {
-    return logout();
+  return logout();
 }
 
-export {
-    proceedAuth,
-    proceedLogout,
-};
+export { proceedAuth, proceedLogout };

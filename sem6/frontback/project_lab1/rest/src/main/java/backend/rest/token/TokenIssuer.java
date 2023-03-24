@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -34,6 +35,11 @@ class TokenIssuer {
                 .setExpiration(expirationDateTime)
                 .compact();
 
+        return compactJws;
+    }
+
+    public String issueToken(Claims claims) {
+        String compactJws = Jwts.builder().setClaims(claims).signWith(key, SignatureAlgorithm.HS256).compact();
         return compactJws;
     }
 }

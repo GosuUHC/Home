@@ -4,6 +4,7 @@ import {
   checkData,
 } from "../../../model/registration/modelRegistration";
 import CompRegistration from "../../components/registration/comp-reg/compReg";
+import Button from "../../components/common/button";
 
 class CompPageRegistration extends React.Component {
   constructor(props) {
@@ -35,12 +36,16 @@ class CompPageRegistration extends React.Component {
 
   render() {
     return (
-      <CompRegistration
-        onChangeLogin={this.onChangeLogin}
-        onChangePassword={this.onChangePassword}
-        onChangePasswordCheck={this.onChangePasswordCheck}
-        proceedRegistration={this.proceedReg}
-      ></CompRegistration>
+      <div>
+        <Button name="Go back" navigatePath="/auth"></Button>
+        <h1>Register</h1>
+        <CompRegistration
+          onChangeLogin={this.onChangeLogin}
+          onChangePassword={this.onChangePassword}
+          onChangePasswordCheck={this.onChangePasswordCheck}
+          proceedRegistration={this.proceedReg}
+        ></CompRegistration>
+      </div>
     );
   }
 }

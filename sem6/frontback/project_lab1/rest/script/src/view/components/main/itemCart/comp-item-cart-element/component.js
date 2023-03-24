@@ -1,63 +1,58 @@
-import template from "./template.js";
+import React from "react";
 
-class CompItemCartElement extends HTMLElement {
+import "./styles.css";
 
-    constructor() {
-        super();
-        this._selected = false;
-        this._count = 1;
-        this._tableElement = undefined;
-        this._root = this.attachShadow({ mode: "closed" });
-    }
+class CompItemCartElement extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-    setTableElement(tableElement) {
-        this._tableElement = tableElement;
-        this._render();
-    }
+  calcPrice = () => {
+    return this.props.count * Number(this.props.price);
+  };
 
-    getCheckState() {
-        return this._selected;
-    }
+  render() {
+    return (
+      <div className="mainTableDivItem">
+        <div className="itemCheckBoxDiv">
+          <input
+            className="itemCheckBox"
+            type="checkbox"
+            checked={this.props.checked}
+            onChange={this.props.onChangeCheck}
+          ></input>
+        </div>
 
-    getCount() {
-        return this._count;
-    }
+        <div className="itemImage"></div>
 
-    getItemIdType() {
-        let itemid = this._tableElement.getField("id");
-        let itemType = this._tableElement.getField("type");
-        return { itemid, itemType }
-    }
+        <div className="itemContent">
+          <div className="itemDescription">
+            <div className="itemDescriptionText">{this.props.itemDesc}</div>
+            <div className="itemDescriptionData">
+              Item id: {this.props.itemid}
+            </div>
+          </div>
 
-    getItemText() {
-        return this._tableElement.getRemainingFields(["id", "price"], true);
-    }
+          <div className="itemPrice">
+            <span> {this.calcPrice()} P</span>
+          </div>
 
-    getItemData() {
-        return this._tableElement.getField("id");
-    }
-
-    getFinalPrice() {
-        return this._count * Number(this._tableElement.getField("price"));
-    }
-
-    connectedCallback() {
-        this._render();
-        let inputs = this._root.querySelectorAll("input");
-
-        inputs[0].addEventListener("click", () => {
-            this._selected = !this._selected;
-        });
-
-        inputs[1].addEventListener("click", () => {
-            this._count = inputs[1].value;
-        });
-    }
-
-    _render() {
-        if (!this.ownerDocument.defaultView) return;
-        this._root.innerHTML = template(this);
-    }
+          <article className="itemActions">
+            <div className="itemCountAction">
+              <input
+                className="itemCountValue"
+                type="number"
+                min="1"
+                max="10"
+                value={this.props.count}
+                onChange={this.props.onChangeCount}
+              ></input>
+            </div>
+          </article>
+        </div>
+      </div>
+    );
+  }
 }
 
-customElements.define("comp-item-cart-element", CompItemCartElement);
+export default CompItemCartElement;

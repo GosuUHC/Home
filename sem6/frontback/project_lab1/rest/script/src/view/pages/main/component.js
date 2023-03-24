@@ -1,62 +1,37 @@
-import template from "./template";
-import "../../components/main/comp-main-controls/component.js";
+import React, { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+
 import { proceedLogout } from "../../../model/auth/modelAuth.js";
+import CompMainControls from "../../components/main/comp-main-controls/component.js";
+import CompPageItemCatalogue from "./itemCatalogue/component.js";
 
+function CompPageMain(props) {
+  const [itemType, setItemType] = useState("");
+  const navigate = useNavigate();
+  let paths = props.paths;
+  let comps = props.comps;
 
-class CompPageMain extends HTMLElement {
+  return (
+    <div>
+      <CompMainControls
+        paths={paths}
+        onClickLogout={() => proceedLogout()}
+        onChangeItemType={(e) => {
+          setItemType(e.target.value);
+          navigate(paths.catalogue);
+        }}
+      ></CompMainControls>
 
-    constructor() {
-        super();
-        this._dataDiv = undefined;
-        this._root = this.attachShadow({ mode: "closed" });
-    }
-
-    connectedCallback() {
-        this._render();
-        this._dataDiv = this._root.getElementById("dataDiv");
-        this.setListeners();
-    }
-
-    async setListeners() {
-        let pagesRouterImport = await import("../../router/pagesRouter.js");
-        let pagesRouter = pagesRouterImport.PagesRouterFactory.createInstance();
-
-        let compMainControls = this._root.querySelectorAll("comp-main-controls")[0];
-        
-        compMainControls.setLogoutListener(async () => {
-            await proceedLogout();
-            pagesRouter.go("auth");
-        });
-
-        compMainControls.setCatalogueSelectListener(async () => {
-            await import("./itemCatalogue/component.js");
-            let itemCataloguePage = document.createElement("comp-page-item-catalogue");
-            itemCataloguePage.setItemType(compMainControls.getSelectValue());
-
-
-            this._dataDiv.removeChild(this._dataDiv.childNodes[0]);
-            this._dataDiv.appendChild(itemCataloguePage);
-        });
-
-        compMainControls.setItemCartListener(async () => {
-            await import("./itemCart/component.js");
-            let itemCartPage = document.createElement("comp-page-item-cart");
-            this._dataDiv.removeChild(this._dataDiv.childNodes[0]);
-            this._dataDiv.appendChild(itemCartPage);
-        });
-
-        compMainControls.setOrdersListener(async () => {
-            await import("./orders/component.js");
-            let ordersPage = document.createElement("comp-page-orders");
-            this._dataDiv.removeChild(this._dataDiv.childNodes[0]);
-            this._dataDiv.appendChild(ordersPage);
-        });
-    }
-
-    _render() {
-        if (!this.ownerDocument.defaultView) return;
-        this._root.innerHTML = template(this);
-    }
+      <Routes>
+        <Route path={paths.itemCart} element={comps.pageItemCart}></Route>
+        <Route path={paths.orders} element={comps.pageOrders}></Route>
+        <Route
+          path={paths.catalogue}
+          element={<CompPageItemCatalogue itemType={itemType} key={itemType} />}
+        ></Route>
+      </Routes>
+    </div>
+  );
 }
 
-customElements.define("comp-page-main", CompPageMain);
+export default CompPageMain;

@@ -1,61 +1,43 @@
-import template from "./template.js";
+import React from "react";
 
-class CompOrderElement extends HTMLElement {
+class CompOrderElement extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-    constructor() {
-        super();
-        this._selected = false;
-        this._tableElementOrder = undefined;
-        this._tableElementItem = undefined;
-        this._root = this.attachShadow({ mode: "closed" });
-    }
+  render() {
+    return (
+      <div>
+        <div className="itemCheckBoxDiv">
+          <input
+            className="itemCheckBox"
+            type="checkbox"
+            checked={this.props.checked}
+            onChange={this.props.onChangeCheck}
+          ></input>
+        </div>
 
-    setTableElement(tableElementOrder, tableElementItem) {
-        this._tableElementOrder = tableElementOrder;
-        this._tableElementItem = tableElementItem;
-        this._render();
-    }
+        <div className="itemImage"></div>
 
-    getCheckState() {
-        return this._selected;
-    }
-
-    getOrderData() {
-        return this._tableElementOrder.getRemainingFields(["id", "itemid", "userLogin", "item"]);
-    }
-
-    getItemData() {
-        return this._tableElementItem.getRemainingFields(["id"], true);
-    }
-
-    getItemId() {
-        return this._tableElementOrder.getField("itemid");
-    }
-
-    getOrderId() {
-        return this._tableElementOrder.getField("id");
-    }
-
-    getPrice() {
-        return this._tableElementOrder.getField("price");
-    }
-
-    connectedCallback() {
-        this._render();
-        let inputs = this._root.querySelectorAll("input");
-
-        inputs[0].addEventListener("click", () => {
-            this._selected = !this._selected;
-        });
-    }
-
-    disconnectedCallback() {
-    }
-
-    _render() {
-        if (!this.ownerDocument.defaultView) return;
-        this._root.innerHTML = template(this);
-    }
+        <div className="itemContent">
+          <div className="itemDescription">
+            <div className="itemDescriptionText">
+              {this.props.orderData}
+              <br></br>
+              Item: {this.props.itemData}
+            </div>
+            <div className="itemDescriptionData">
+              Item id: {this.props.itemid}
+              Order id: {this.props.orderid}
+            </div>
+          </div>
+          <div className="itemPrice">
+            <span> {this.props.price} P</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-customElements.define("comp-order-element", CompOrderElement);
+export default CompOrderElement;

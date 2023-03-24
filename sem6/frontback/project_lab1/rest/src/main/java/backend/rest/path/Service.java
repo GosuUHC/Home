@@ -20,8 +20,8 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 
 @Path("/")
@@ -59,7 +59,7 @@ public class Service {
     @Path("/auth")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response auth(String loginPasswordJSON, @Context HttpHeaders httpHeaders) {
+    public Response auth(String loginPasswordJSON, @Context ContainerRequestContext requestContext) {
         Jsonb jsonb = JsonbBuilder.create();
         User user;
         String token;
@@ -68,7 +68,7 @@ public class Service {
         try {
             try {
                 user = jsonb.fromJson(loginPasswordJSON, User.class);
-                token = httpHeaders.getHeaderString("Token");
+                token = requestContext.getHeaderString("Token");
                 if (token.equals("") || token == null || token.equals("undefined")) { // if user doesnt have token
                     if (!authorizer.authorize(user)) { // if invalid login/password
                         return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -79,7 +79,7 @@ public class Service {
                 } else {
                     // user has token
                     // check if token is correct
-                    if (!tokenManager.checkToken(user.getLogin(), token)) { // if invalid token
+                    if (!tokenManager.checkToken(token)) { // if invalid token
                         return Response.status(Response.Status.UNAUTHORIZED).build();
                     }
                 }
@@ -127,9 +127,13 @@ public class Service {
     @TokenRequired
     @Path("/orders")
     @Produces("application/json")
-    public Response getOrdersData(@Context HttpHeaders httpHeaders) {
+    public Response getOrdersData(@Context ContainerRequestContext requestContext) {
+        String checkedToken = requestContext.getProperty("checkToken").toString();
+        if (checkedToken.equals("false")) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
         Jsonb jsonb = JsonbBuilder.create();
-        String login = httpHeaders.getHeaderString("Name");
+        String login = requestContext.getHeaderString("Name");
         String resultJSON;
 
         try {
@@ -147,11 +151,15 @@ public class Service {
     @Path("/orders")
     @Consumes("application/json")
     @Produces("text/plain")
-    public Response createNewOrder(@Context HttpHeaders httpHeaders) {
-        String login = httpHeaders.getHeaderString("Name");
-        Integer itemid = Integer.valueOf(httpHeaders.getHeaderString("itemid"));
-        String itemType = httpHeaders.getHeaderString("itemType");
-        String itemCount = httpHeaders.getHeaderString("itemCount");
+    public Response createNewOrder(@Context ContainerRequestContext requestContext) {
+        String checkedToken = requestContext.getProperty("checkToken").toString();
+        if (checkedToken.equals("false")) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        String login = requestContext.getHeaderString("Name");
+        Integer itemid = Integer.valueOf(requestContext.getHeaderString("itemid"));
+        String itemType = requestContext.getHeaderString("itemType");
+        String itemCount = requestContext.getHeaderString("itemCount");
 
         try {
             ordersPoster.addNewOrder(login, itemid, itemCount, itemType);
@@ -166,8 +174,12 @@ public class Service {
     @Path("/orders")
     @Consumes("application/json")
     @Produces("text/plain")
-    public Response deleteOrder(@Context HttpHeaders httpHeaders) {
-        int id = Integer.valueOf(httpHeaders.getHeaderString("id"));
+    public Response deleteOrder(@Context ContainerRequestContext requestContext) {
+        String checkedToken = requestContext.getProperty("checkToken").toString();
+        if (checkedToken.equals("false")) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        int id = Integer.valueOf(requestContext.getHeaderString("id"));
 
         try {
             ordersDeleter.deleteById(id);
@@ -184,9 +196,13 @@ public class Service {
     @TokenRequired
     @Consumes("application/json")
     @Produces("application/json")
-    public Response getItemByType(@Context HttpHeaders httpHeaders) {
+    public Response getItemByType(@Context ContainerRequestContext requestContext) {
+        String checkedToken = requestContext.getProperty("checkToken").toString();
+        if (checkedToken.equals("false")) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
         Jsonb jsonb = JsonbBuilder.create();
-        String type = httpHeaders.getHeaderString("type");
+        String type = requestContext.getHeaderString("type");
 
         String resultJSON;
         try {
