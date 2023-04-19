@@ -1,0 +1,10 @@
+.delBtnDiv {
+  color: rgb(30, 126, 223);
+  width: auto;
+  height: auto;
+}
+
+.delBtnDiv:hover {
+  color: rgb(198, 146, 50);
+  cursor: pointer;
+}
