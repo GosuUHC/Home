@@ -2,7 +2,7 @@ import {
   getAllOrders as getAllOrdersTransport,
   addOrder as addOrderTransport,
   deleteOrder as deleteOrderTransport,
-} from "../../../transport/main/transportOrders.js";
+} from "transport/main/transportOrders.js";
 
 function getAllOrders() {
   return getAllOrdersTransport();

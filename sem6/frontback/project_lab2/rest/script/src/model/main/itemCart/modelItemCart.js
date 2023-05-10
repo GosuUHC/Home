@@ -2,7 +2,7 @@ import {
   getPageCartItemsList as getPageCartItemsListTransport,
   addPageCartItem as addPageCartItemTransport,
   delPageCartItem as delPageCartItemTransport,
-} from "../../../transport/main/transportItemCart.js";
+} from "transport/main/transportItemCart.js";
 
 function getPageCartItemsList() {
   return getPageCartItemsListTransport();

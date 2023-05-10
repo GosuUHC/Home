@@ -1,11 +1,12 @@
-import { fetchWrapper } from "../request.js";
+import { fetchWrapper } from "transport/request";
 
-let protocol = "http";
-let host = "localhost";
-let port = "8080";
-let name = "rest-1";
-let domain = `${protocol}://${host}:${port}/${name}`;
+const protocol = "http";
+const host = "localhost";
+const port = "8080";
+const name = "rest-1";
+const domain = `${protocol}://${host}:${port}/${name}`;
 
+/** **Also returns user role!** */
 async function sendAuthData(login, password) {
   const loginData = {
     login,
@@ -19,6 +20,7 @@ async function sendAuthData(login, password) {
     {}
   );
   setTokenAndRoleFromServ(response);
+  return response.role;
 }
 
 function setTokenAndRoleFromServ(response) {

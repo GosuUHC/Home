@@ -1,0 +1,83 @@
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f2f2f2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  overflow: hidden; 
+}
+
+.logoutWraper {
+  order: 1;
+}
+
+.catalogue {
+  display: flex;
+  align-items: center;
+  order: 2;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.catalogueActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order: 3;
+}
+
+button {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+button.primary {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+button.secondary {
+  background-color: #f50057;
+  color: #fff;
+}
+
+button.disabled {
+  background-color: #ccc;
+  color: #fff;
+  cursor: default;
+}
+
+button:hover:not(.disabled) {
+  opacity: 0.8;
+}
+
+.itemSelect {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+}
+
+

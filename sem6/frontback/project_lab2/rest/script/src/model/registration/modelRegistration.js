@@ -1,4 +1,4 @@
-import { sendRegData } from "../../transport/registration/transportRegistration.js";
+import { sendRegData } from "transport/registration/transportRegistration.js";
 
 function proceedRegistration(login, password) {
   return sendRegData(login, password);
