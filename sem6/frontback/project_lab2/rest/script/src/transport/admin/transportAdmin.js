@@ -25,8 +25,6 @@ export async function getPagedOrders(page, pageSize) {
     `${domain}/api/v1/orders/${page}/${pageSize}`
   );
 
-  console.log(response);
-
   return response;
 }
 
@@ -35,8 +33,6 @@ export async function getPagedOrdersByUsername(username, page, pageSize) {
     "GET",
     `${domain}/api/v1/orders/${username}/${page}/${pageSize}`
   );
-
-  console.log(response);
 
   return response;
 }

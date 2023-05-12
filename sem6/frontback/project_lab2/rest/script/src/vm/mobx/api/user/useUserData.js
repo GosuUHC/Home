@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { userStore } from "vm/mobx/impl/store";
-import { onReload, proceedAuth, proceedLogout } from "model/auth/modelAuth";
+import { proceedAuth, proceedLogout } from "model/auth/modelAuth";
 import { useObserver } from "mobx-react-lite";
 
 function useUserData() {
   const handleLogin = (login, password) => {
     proceedAuth(login, password)
-      .then((role) => {
+      .then(({ res: role }) => {
+        userStore.setLogin(login);
         userStore.setRole(role);
         userStore.setAuthorized(true);
       })

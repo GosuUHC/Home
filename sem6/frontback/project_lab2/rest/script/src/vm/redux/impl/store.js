@@ -4,6 +4,7 @@ import {
   ordersReducer,
   catalogueReducer,
   adminReducer,
+  notificationsReducer,
 } from "./slice";
 
 // auto thunk and auto combineReducers
@@ -13,6 +14,7 @@ const store = configureStore({
     orders: ordersReducer,
     catalogue: catalogueReducer,
     admin: adminReducer,
+    notifications: notificationsReducer,
   },
 });
 

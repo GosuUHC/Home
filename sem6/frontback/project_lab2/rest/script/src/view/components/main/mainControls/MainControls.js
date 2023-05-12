@@ -1,7 +1,7 @@
 import Button from "view/components/common/button";
 import styles from "./MainControls.module.css";
 import { useUserData, useUserIsAdmin } from "vm/api";
-
+import NotificationBell from "./NotificationBell";
 
 function MainControls(props) {
   const paths = props.paths;
@@ -44,6 +44,9 @@ function MainControls(props) {
               navigatePath={paths.admin}
             ></Button>
           )}
+          <div className={styles.notificationWrapper}>
+            <NotificationBell />
+          </div>
         </div>
       </div>
     </div>

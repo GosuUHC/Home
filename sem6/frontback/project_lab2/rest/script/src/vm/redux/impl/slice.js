@@ -167,7 +167,6 @@ const adminSlice = createSlice({
           newStatus,
         });
       }
-
     },
     resetChangedOrders: (state) => {
       state.ordersIdAndUpdatedStatus =
@@ -189,3 +188,48 @@ export const {
 } = adminSlice.actions;
 
 export const adminReducer = adminSlice.reducer;
+
+// ****************************************************************************************
+
+const initialStateNotifications = {
+  ordersNotifications: [],
+  messageNotifications: [],
+};
+
+const notificationsSlice = createSlice({
+  name: "notifications",
+  initialState: initialStateNotifications,
+  reducers: {
+    addOrderNotification: (state, action) => {
+      state.ordersNotifications.push(action.payload);
+    },
+    removeOrderNotification: (state, action) => {
+      state.ordersNotifications = state.ordersNotifications.filter(
+        (notification) => notification.id !== action.payload
+      );
+    },
+    addMessageNotification: (state, action) => {
+      state.messageNotifications.push(action.payload);
+    },
+    removeMessageNotification: (state, action) => {
+      state.messageNotifications = state.messageNotifications.filter(
+        (notification) => notification !== action.payload
+      );
+    },
+    resetNotifications: (state) => {
+      state.ordersNotifications = initialStateNotifications.ordersNotifications;
+      state.messageNotifications =
+        initialStateNotifications.messageNotifications;
+    },
+  },
+});
+export const {
+  addOrderNotification,
+  removeOrderNotification,
+  addMessageNotification,
+  removeMessageNotification,
+  resetNotifications,
+} = notificationsSlice.actions;
+export const notificationsReducer = notificationsSlice.reducer;
+
+// ****************************************************************************************

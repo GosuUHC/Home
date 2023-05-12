@@ -11,8 +11,6 @@ function PageMain(props) {
   const paths = props.paths;
   const comps = props.comps;
 
-  
-
   return (
     <div className={styles.wrapper}>
       {comps.adminComp}

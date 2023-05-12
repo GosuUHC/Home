@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useAdminOrders } from "vm/api";
 import {
   Table,
@@ -27,13 +28,26 @@ function PageAdmin() {
     handleOrderStatusChange,
     handleOrderStatusChangeConfirm,
   } = useAdminOrders();
+  const tableRef = useRef(null);
 
   if (!loaded) {
     return <CircularProgress />;
   }
 
+  const handleMouseMove = (e) => {
+    if (tableRef.current) {
+      const width = e.pageX - tableRef.current.getBoundingClientRect().left;
+      tableRef.current.style.width = `${width}px`;
+    }
+  };
+
+  const handleMouseUp = () => {
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
+
   const displayOrders = tableData.map((order) => (
-    <TableRow key={order.id}>
+    <TableRow key={order.id} style={{ fontSize: "20px" }}>
       <TableCell>{order.id}</TableCell>
       <TableCell>{order.userLogin}</TableCell>
       <TableCell>{order.itemType}</TableCell>
@@ -68,8 +82,12 @@ function PageAdmin() {
         variant="outlined"
         shape="rounded"
       />
-      <TableContainer component={Paper} className={styles.tableContainer}>
-        <Table>
+      <TableContainer
+        component={Paper}
+        className={styles.tableContainer}
+        ref={tableRef}
+      >
+        <Table style={{ fontSize: "28px" }}>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>

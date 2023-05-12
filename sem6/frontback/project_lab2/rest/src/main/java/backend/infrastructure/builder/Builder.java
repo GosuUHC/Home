@@ -1,7 +1,5 @@
 package backend.infrastructure.builder;
 
-import backend.application.interfaces.async.INotificationsCounterAsync;
-import backend.application.interfaces.async.INotificationsUpdaterAsync;
 import backend.application.interfaces.authentication.IAuthorizer;
 import backend.application.interfaces.items.IItemsGetter;
 import backend.application.interfaces.orders.IOrdersDeleter;
@@ -58,14 +56,6 @@ public class Builder {
     @Default
     private IRegistrator registrator;
 
-    @Inject
-    @Default
-    private INotificationsCounterAsync notificationsCounterAsync;
-
-    @Inject
-    @Default
-    private INotificationsUpdaterAsync NotificationsUpdaterAsync;
-
     @Produces
     @Built
     public IOrdersGetter buildOrdersGetter() {
@@ -114,13 +104,6 @@ public class Builder {
     public IRegistrator buildRegistrator() {
         registrator.injectUsersRepository(usersRepository);
         return registrator;
-    }
-
-    @Produces
-    @Built
-    public INotificationsCounterAsync buildCounterAsync() {
-        notificationsCounterAsync.assignUpdater(NotificationsUpdaterAsync);
-        return notificationsCounterAsync;
     }
 
 }

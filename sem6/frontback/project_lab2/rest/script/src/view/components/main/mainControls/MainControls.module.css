@@ -8,8 +8,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999;
-  overflow: hidden; 
+  z-index: 9999;
+  overflow: visible;
 }
 
 .logoutWraper {
@@ -80,4 +80,9 @@ button:hover:not(.disabled) {
   background-size: 16px;
 }
 
-
+.notificationWrapper {
+  display: flex;
+  flex-grow: 1;
+  order: 4;
+  justify-content: flex-end;
+}

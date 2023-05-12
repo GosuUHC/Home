@@ -1,5 +1,3 @@
-import React from "react";
-
 function ItemCatalogue(props) {
   const { tableData, handleClick } = props;
 
@@ -7,9 +5,7 @@ function ItemCatalogue(props) {
     return null;
   }
 
-  const renderCatalogue = tableData.map((elem, i) => {
-    
-  })
+  const renderCatalogue = tableData.map((elem, i) => {});
 
   // const catalogueHeaders = (
   //   <thead>

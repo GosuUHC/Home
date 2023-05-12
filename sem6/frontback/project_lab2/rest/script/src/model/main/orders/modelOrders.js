@@ -4,6 +4,8 @@ import {
   deleteOrder as deleteOrderTransport,
 } from "transport/main/transportOrders.js";
 
+import { ordersNotificationsManager } from "transport/websocket";
+
 function getAllOrders() {
   return getAllOrdersTransport();
 }
@@ -16,4 +18,14 @@ function deleteOrder(ordid) {
   return deleteOrderTransport(ordid);
 }
 
-export { getAllOrders, addOrder, deleteOrder };
+function manageNotifications(login) {
+  const { initialize, subscribe, unsubscribe } = ordersNotificationsManager;
+  initialize(login);
+
+  return {
+    subscribe,
+    unsubscribe,
+  };
+}
+
+export { getAllOrders, addOrder, deleteOrder, manageNotifications };

@@ -9,7 +9,19 @@
 }
 
 .tableContainer {
-  max-width: 60%;
+  width: 60%;
+  min-width: 40%;
   height: 450px;
   overflow-y: scroll;
+  resize: both;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.tableCell {
+  font-size: 34px;
 }

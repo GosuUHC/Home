@@ -5,6 +5,8 @@ import {
   useCatalogue,
   useItemCart,
   useAdminOrders,
+  useOrdersNotifications,
+  useMessageNotifications,
 } from "./redux/api";
 
 import {
@@ -23,4 +25,6 @@ export {
   useUserData,
   useUserIsAdmin,
   useAdminOrders,
+  useOrdersNotifications,
+  useMessageNotifications,
 };
