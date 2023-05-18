@@ -1,45 +1,44 @@
 import { TableElement } from "model/main/modelMain.js";
-import OrderElement from "view/components/main/orders/comp-order-element/OrderElement.js";
 import { useOrders } from "vm/api";
 
 import styles from "./PageOrders.module.css";
+import ProductCard from "view/components/main/shared/ProductCard/ProductCard";
+import Loading from "view/components/common/Loading";
 
 function PageOrders(props) {
   const { tableData, loaded, checks, handleCheck, handleDelete } = useOrders();
 
   if (!loaded) {
-    return <div>Loading...</div>;
+    return <Loading />
   }
-
+  
   const renderOrders = tableData.map((tableItem, i) => {
     const order = new TableElement();
     const item = new TableElement();
     order.set(tableItem);
     item.set(tableItem["item"]);
     return (
-      <OrderElement
+      <ProductCard
         key={i}
-        orderData={order.getRemainingFields([
-          "id",
-          "itemid",
+        title={item.getRemainingFields(["id", "img", "price"], true)}
+        description={order.getRemainingFields([
           "userLogin",
           "item",
+          "price",
         ])}
-        itemData={item.getRemainingFields(["id"], true)}
-        itemid={item.getField("id")}
-        orderid={order.getField("id")}
         price={order.getField("price")}
-        checked={checks[i]}
-        onChangeCheck={(e) => handleCheck(i, e.target.checked)}
-      ></OrderElement>
+        img={item.getField("img")}
+        // checked={checks[i]}
+        // onChangeCheck={(e) => handleCheck(i, e.target.checked)}
+      ></ProductCard>
     );
   });
   return (
-    <div>
+    <div className={styles.pageContainer}>
       <div className={styles.delBtnDiv} onClick={handleDelete}>
         Delete selected
       </div>
-      {renderOrders}
+      <div className={styles.ordersContainer}>{renderOrders}</div>
     </div>
   );
 }

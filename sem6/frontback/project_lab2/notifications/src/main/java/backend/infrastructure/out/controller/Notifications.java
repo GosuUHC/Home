@@ -19,7 +19,6 @@ public class Notifications {
                 sess.getAsyncRemote().sendText(valueJSON);
             }
         }
-
     }
 
     public static void send(String clientName, String valueJSON) {
@@ -29,13 +28,11 @@ public class Notifications {
                 sess.getAsyncRemote().sendText(valueJSON);
             }
         }
-
     }
 
     @OnOpen
     public void onOpen(Session session, @PathParam("clientName") String clientName) {
         mapNamesSessions.put(clientName, session);
-
     }
 
     @OnClose

@@ -30,6 +30,9 @@ public class EMB implements EItem {
     @Column(name = "\"price\"")
     private String price;
 
+    @Column(name = "\"image_link\"")
+    private String img;
+
     public int getId() {
         return id;
     }
@@ -78,15 +81,24 @@ public class EMB implements EItem {
         this.price = price;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Override
     public Object[] getAll() {
-        Object fieldValues[] = new Object[6];
+        Object fieldValues[] = new Object[7];
         fieldValues[0] = getId();
         fieldValues[1] = getManufacturer();
         fieldValues[2] = getName();
         fieldValues[3] = getSocket();
         fieldValues[4] = getChipset();
         fieldValues[5] = getPrice();
+        fieldValues[6] = getImg();
         return fieldValues;
     }
 

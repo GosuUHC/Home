@@ -1,8 +1,11 @@
 package backend.infrastructure.out.controller;
 
-import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
+import backend.application.interfaces.async.timer.Timerable;
+import backend.application.interfaces.messaging.MessageSender;
+import backend.infrastructure.builder.Built;
+import jakarta.inject.Inject;
 import jakarta.websocket.OnClose;
 import jakarta.websocket.OnOpen;
 import jakarta.websocket.Session;
@@ -10,23 +13,25 @@ import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/messages/{clientName}")
-public class Messages {
+public class Messages implements MessageSender {
+
+    @Inject
+    @Built
+    Timerable timer;
 
     private final static ConcurrentHashMap<String, Session> mapNamesSessions = new ConcurrentHashMap<>();
 
-    public static void sendAll(String message) {
+    @Override
+    public void sendAll(String message) {
         for (Session sess : mapNamesSessions.values()) {
             if (sess.isOpen()) {
-                try {
-                    sess.getBasicRemote().sendText(message);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                sess.getAsyncRemote().sendText(message);
             }
         }
     }
 
-    public static void send(String clientName, String value) {
+    @Override
+    public void send(String clientName, String value) {
         if (clientName != null) {
             Session session = mapNamesSessions.get(clientName);
             session.getAsyncRemote().sendText(value);
@@ -36,11 +41,13 @@ public class Messages {
     @OnOpen
     public void onOpen(Session session, @PathParam("clientName") String clientName) {
         mapNamesSessions.put(clientName, session);
+        timer.addListener(clientName, () -> this.send(clientName, "Subscribe to our socials!"));
     }
 
     @OnClose
     public void onClose(Session session, @PathParam("clientName") String clientName) {
         mapNamesSessions.remove(clientName);
+        timer.removeListener(clientName);
     }
 
 }

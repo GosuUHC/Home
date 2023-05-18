@@ -1,19 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   setCatalogueTableData,
   updateCatalogueLoaded,
-  resetCatalogueSelectedRowsIdx,
-  addCatalogueSelectedRowsIdx,
-  delCatalogueSelectedRowsIdx,
 } from "vm/redux/impl/slice";
 
 import { getItems } from "model/main/catalogueItems/modelCatalogue";
 import { addPageCartItems } from "model/main/itemCart/modelItemCart";
 
 const fetchCatalogue = (itemType) => async (dispatch) => {
-  if (!itemType) {
+  if (!itemType || itemType === "") {
     return;
   }
   try {
@@ -27,42 +24,26 @@ const fetchCatalogue = (itemType) => async (dispatch) => {
 
 function useCatalogue() {
   const dispatch = useDispatch();
-  const { itemType, tableData, loaded, selectedRowsIdx } = useSelector(
+  const { itemType, tableData, loaded } = useSelector(
     (state) => state.catalogue
   );
 
   useEffect(() => {
     dispatch(fetchCatalogue(itemType));
-    return () => {
-      dispatch(resetCatalogueSelectedRowsIdx());
-    };
   }, [dispatch, itemType]);
 
-  const addToSelectedRows = (index) => {
-    dispatch(addCatalogueSelectedRowsIdx(index));
-  };
-
-  const delFromSelectedRows = (index) => {
-    dispatch(delCatalogueSelectedRowsIdx(index));
-  };
-
-  const handleAddingitems = () => {
+  const handleAdd = (index) => {
     const itemsToAdd = [];
-    for (let index of selectedRowsIdx) {
-      let dataToAdd = { ...tableData[index] };
-      dataToAdd.itemType = itemType;
-      itemsToAdd.push(dataToAdd);
-    }
+    let dataToAdd = { ...tableData[index] };
+    dataToAdd.itemType = itemType;
+    itemsToAdd.push(dataToAdd);
     addPageCartItems(itemsToAdd);
   };
 
   return {
     tableData,
     loaded,
-    selectedRowsIdx,
-    addToSelectedRows,
-    delFromSelectedRows,
-    handleAddingitems,
+    handleAdd,
   };
 }
 

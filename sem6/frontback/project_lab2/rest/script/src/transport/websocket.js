@@ -1,5 +1,3 @@
-const _webSockets = [];
-
 export const messagesManager = (() => {
   const app = "rest-1";
   let _wsMessages = null;
@@ -8,7 +6,6 @@ export const messagesManager = (() => {
 
   const messagesHandler = ({ data }) => {
     const message = data;
-    console.log(message);
     _subs.forEach((sub) => sub(message));
   };
 
@@ -25,9 +22,17 @@ export const messagesManager = (() => {
       _wsMessages = new WebSocket(
         `ws://localhost:8080/${app}/messages/${login}`
       );
-      _webSockets.push(_wsMessages);
       _wsMessages.onmessage = messagesHandler;
       isInitialized = true;
+    }
+  };
+
+  const resetConnection = () => {
+    if (isInitialized) {
+      if (_wsMessages.readyState === WebSocket.OPEN) {
+        _wsMessages.close();
+      }
+      isInitialized = false;
     }
   };
 
@@ -35,6 +40,7 @@ export const messagesManager = (() => {
     initialize,
     subscribe,
     unsubscribe,
+    resetConnection,
   };
 })();
 
@@ -62,9 +68,17 @@ export const ordersNotificationsManager = (() => {
       _wsOrders = new WebSocket(
         `ws://localhost:8080/${app}/notifications/orders/${login}`
       );
-      _webSockets.push(_wsOrders);
       _wsOrders.onmessage = notificationsHandler;
       isInitialized = true;
+    }
+  };
+
+  const resetConnection = () => {
+    if (isInitialized) {
+      if (_wsOrders.readyState === WebSocket.OPEN) {
+        _wsOrders.close();
+      }
+      isInitialized = false;
     }
   };
 
@@ -72,13 +86,12 @@ export const ordersNotificationsManager = (() => {
     initialize,
     subscribe,
     unsubscribe,
+    resetConnection,
   };
 })();
 
 export const closeAllConnections = () => {
-  _webSockets.forEach((ws) => {
-    if (ws.readyState === WebSocket.OPEN) {
-      ws.close();
-    }
+  [messagesManager, ordersNotificationsManager].forEach((manager) => {
+    manager.resetConnection();
   });
 };

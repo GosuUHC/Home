@@ -3,12 +3,13 @@ package backend.domain.pojo.itemtype;
 import backend.domain.pojo.Item;
 
 public class GPU implements Item {
-    int id;
-    String manufacturer;
-    String name;
-    String vram;
-    String gpuFrequency;
-    String price;
+    private int id;
+    private String manufacturer;
+    private String name;
+    private String vram;
+    private String gpuFrequency;
+    private String price;
+    private String img;
 
     public int getId() {
         return id;
@@ -50,6 +51,14 @@ public class GPU implements Item {
         this.gpuFrequency = gpuFrequency;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Override
     public String getPrice() {
         return price;
@@ -62,13 +71,13 @@ public class GPU implements Item {
     @Override
     public void setAll(Object[] params) {
         try {
-
             setId((int) params[0]);
             setManufacturer((String) params[1]);
             setName((String) params[2]);
             setVram((String) params[3]);
             setGpuFrequency((String) params[4]);
             setPrice((String) params[5]);
+            setImg((String) params[6]);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,46 +1,32 @@
-import ItemCatalogue from "view/components/main/itemCatalogue/comp-item-catalogue/ItemCatalogue.js";
-import Button from "view/components/common/button";
-
-import styles from "./PageItemCatalogue.module.css";
 import { useCatalogue } from "vm/api.js";
+import { TableElement } from "model/main/modelMain";
+import ProductCard from "view/components/main/shared/ProductCard/ProductCard";
+import AddToCartButton from "view/components/main/itemCatalogue/addToCartButton/AddToCartButton";
+import Loading from "view/components/common/Loading";
 
 function PageItemCatalogue(props) {
-  const {
-    tableData,
-    loaded,
-    addToSelectedRows,
-    delFromSelectedRows,
-    handleAddingitems
-  } = useCatalogue();
-
-  const handleClick = (e) => {
-    const dataIndex = e.currentTarget.rowIndex - 1;
-    const action = e.currentTarget.classList.contains(styles.active)
-      ? () => {
-          e.currentTarget.classList.remove(styles.active);
-          delFromSelectedRows(dataIndex);
-        }
-      : () => {
-          e.currentTarget.classList.add(styles.active);
-          addToSelectedRows(dataIndex);
-        };
-
-    action();
-  };
+  const { tableData, loaded, handleAdd } = useCatalogue();
 
   if (!loaded) {
-    return <div />;
+    return <Loading />;
   }
-  
-  return (
-    <div>
-      <Button name="Add to cart" onClick={handleAddingitems}></Button>
-      <ItemCatalogue
-        tableData={tableData}
-        handleClick={handleClick}
-      ></ItemCatalogue>
-    </div>
-  );
+
+  const renderCatalogue = tableData.map((data, i) => {
+    const item = new TableElement();
+    item.set(data);
+    return (
+      <ProductCard
+        key={i}
+        title={item.getRemainingFields(["id", "img", "price"], true)}
+        description={item.getRemainingFields(["img", "manufacturer", "name"])}
+        price={item.getField("price")}
+        img={item.getField("img")}
+        actions={<AddToCartButton index={i} handleAdd={handleAdd} />}
+      />
+    );
+  });
+
+  return <>{renderCatalogue}</>;
 }
 
 export default PageItemCatalogue;

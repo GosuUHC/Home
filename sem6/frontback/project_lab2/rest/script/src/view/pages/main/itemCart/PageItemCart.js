@@ -1,10 +1,11 @@
-import Button from "view/components/common/button";
+import Button from "view/components/common/Button";
 
 import { TableElement } from "model/main/modelMain";
-import CompItemCartElement from "view/components/main/itemCart/comp-item-cart-element/component";
+import CompItemCartElement from "view/components/main/itemCart/item-cart-element/ItemCartElement";
 
 import styles from "./PageItemCart.module.css";
 import { useItemCart } from "vm/api";
+import Loading from "view/components/common/Loading";
 
 function PageItemCart(props) {
   const {
@@ -19,7 +20,7 @@ function PageItemCart(props) {
   } = useItemCart();
 
   if (!loaded) {
-    return <div></div>;
+    return <Loading />;
   }
   const renderItemCart = itemsList.map((pageCartItem, i) => {
     const item = new TableElement();

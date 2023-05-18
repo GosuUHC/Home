@@ -122,6 +122,7 @@ public class OrdersRepository implements IOrdersRepository {
 
             for (EOrder eOrder : eOrders) {
                 Item item = itemsRepository.findByIdAndType(eOrder.getItemid(), eOrder.getItemType());
+                Logger.getLogger(OrdersRepository.class.getName()).log(Level.WARNING, item.toString());
                 orders.add(buildOrder(eOrder, item));
             }
             return orders;

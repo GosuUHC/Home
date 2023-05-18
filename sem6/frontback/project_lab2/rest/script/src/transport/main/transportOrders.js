@@ -8,6 +8,8 @@ const domain = `${protocol}://${host}:${port}/${name}`;
 
 async function getAllOrders() {
   let response = await fetchWrapper("GET", `${domain}/api/v1/orders`, {}, {});
+  console.log(response);
+
   return response;
 }
 

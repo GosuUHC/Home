@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import Auth from "view/components/auth/comp-auth/Auth";
+import Auth from "view/components/auth/Auth";
 
 import styles from "./PageAuth.module.css";
 import { useUserData } from "vm/api";
+import Error from "view/components/common/Error";
 
 function PageAuth(props) {
   const [login, setLogin] = useState("");
@@ -34,6 +35,7 @@ function PageAuth(props) {
         onChangePassword={onChangePassword}
         proceedAuth={() => handleLogin(login, password)}
       />
+      {userData.error && <Error errorMessage={userData.error} />}
       <Link className={styles.createAccountLink} to="/reg">
         Create an account
       </Link>

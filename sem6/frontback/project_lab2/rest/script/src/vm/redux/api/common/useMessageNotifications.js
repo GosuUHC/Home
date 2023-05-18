@@ -21,6 +21,7 @@ function useMessageNotifications() {
     const onMessage = (message) => {
       dispatch(addMessageNotification(message));
     };
+    
     subscribe(onMessage);
     return () => unsubscribe(onMessage);
   }, [dispatch, subscribe, unsubscribe]);

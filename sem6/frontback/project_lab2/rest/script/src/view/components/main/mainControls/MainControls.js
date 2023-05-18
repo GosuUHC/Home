@@ -1,4 +1,4 @@
-import Button from "view/components/common/button";
+import Button from "view/components/common/Button";
 import styles from "./MainControls.module.css";
 import { useUserData, useUserIsAdmin } from "vm/api";
 import NotificationBell from "./NotificationBell";

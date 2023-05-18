@@ -104,28 +104,11 @@ const catalogueSlice = createSlice({
     updateCatalogueLoaded: (state, action) => {
       state.loaded = action.payload;
     },
-    addCatalogueSelectedRowsIdx: (state, action) => {
-      state.selectedRowsIdx = [...state.selectedRowsIdx, action.payload];
-    },
-    delCatalogueSelectedRowsIdx: (state, action) => {
-      state.selectedRowsIdx = state.selectedRowsIdx.filter(
-        (item) => item !== action.payload
-      );
-    },
-    resetCatalogueSelectedRowsIdx: (state, action) => {
-      state.selectedRowsIdx = catalogueInitialState.selectedRowsIdx;
-    },
   },
 });
 
-export const {
-  setItemType,
-  setCatalogueTableData,
-  updateCatalogueLoaded,
-  addCatalogueSelectedRowsIdx,
-  delCatalogueSelectedRowsIdx,
-  resetCatalogueSelectedRowsIdx,
-} = catalogueSlice.actions;
+export const { setItemType, setCatalogueTableData, updateCatalogueLoaded } =
+  catalogueSlice.actions;
 export const catalogueReducer = catalogueSlice.reducer;
 
 // ****************************************************************************************
@@ -209,7 +192,9 @@ const notificationsSlice = createSlice({
       );
     },
     addMessageNotification: (state, action) => {
-      state.messageNotifications.push(action.payload);
+      if (!state.messageNotifications.includes(action.payload)) {
+        state.messageNotifications.push(action.payload);
+      }
     },
     removeMessageNotification: (state, action) => {
       state.messageNotifications = state.messageNotifications.filter(

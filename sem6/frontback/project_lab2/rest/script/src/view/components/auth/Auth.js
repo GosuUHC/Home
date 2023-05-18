@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "view/components/common/button.js";
+import Button from "view/components/common/Button.js";
 import TextField from "view/components/common/textField";
 import styles from "./Auth.module.css";
 

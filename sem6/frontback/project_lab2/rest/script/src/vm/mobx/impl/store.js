@@ -5,6 +5,7 @@ export const userInitialState = {
   authorized: false,
   role: null,
   isAdmin: false,
+  error: null,
 };
 
 class UserStore {
@@ -13,6 +14,7 @@ class UserStore {
     authorized: userInitialState.authorized,
     role: userInitialState.role,
     isAdmin: userInitialState.isAdmin,
+    error: userInitialState.error,
   };
 
   constructor() {
@@ -35,11 +37,16 @@ class UserStore {
     this.userState.isAdmin = isAdmin;
   }
 
+  setError(error) {
+    this.userState.error = error;
+  }
+
   resetUserState() {
     this.userState.login = userInitialState.login;
     this.userState.authorized = userInitialState.authorized;
     this.userState.role = userInitialState.role;
     this.userState.isAdmin = userInitialState.isAdmin;
+    this.userState.error = userInitialState.error;
   }
 }
 

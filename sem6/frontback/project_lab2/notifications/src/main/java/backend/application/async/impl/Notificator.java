@@ -4,7 +4,7 @@ import backend.application.async.api.Executable;
 import backend.application.async.api.Notificationable;
 import backend.application.async.api.Updatable;
 
-public class Notifier implements Notificationable {
+public class Notificator implements Notificationable {
 
     private Executable executor;
 
@@ -22,9 +22,7 @@ public class Notifier implements Notificationable {
 
     @Override
     public void notificate(String clientID, String value) {
-        executor.execute(() -> {
-            updater.update(clientID, value);
-        });
+        executor.execute(() -> updater.update(clientID, value));
     }
 
 }

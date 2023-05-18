@@ -3,12 +3,13 @@ package backend.domain.pojo.itemtype;
 import backend.domain.pojo.Item;
 
 public class Motherboard implements Item {
-    int id;
-    String manufacturer;
-    String name;
-    String socket;
-    String chipset;
-    String price;
+    private int id;
+    private String manufacturer;
+    private String name;
+    private String socket;
+    private String chipset;
+    private String price;
+    private String img;
 
     public int getId() {
         return id;
@@ -50,6 +51,14 @@ public class Motherboard implements Item {
         this.chipset = chipset;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Override
     public String getPrice() {
         return price;
@@ -62,13 +71,13 @@ public class Motherboard implements Item {
     @Override
     public void setAll(Object[] params) {
         try {
-
             setId((int) params[0]);
             setManufacturer((String) params[1]);
             setName((String) params[2]);
             setSocket((String) params[3]);
             setChipset((String) params[4]);
             setPrice((String) params[5]);
+            setImg((String) params[6]);
 
         } catch (Exception e) {
             e.printStackTrace();

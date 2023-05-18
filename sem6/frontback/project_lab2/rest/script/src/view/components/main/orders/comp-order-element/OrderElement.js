@@ -12,7 +12,9 @@ function OrderElement(props) {
         ></input>
       </div>
 
-      <div className="itemImage"></div>
+      <div className="itemImage">
+        <img src={props.itemImg}></img>
+      </div>
 
       <div className="itemContent">
         <div className="itemDescription">

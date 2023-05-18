@@ -3,12 +3,13 @@ package backend.domain.pojo.itemtype;
 import backend.domain.pojo.Item;
 
 public class CPU implements Item {
-    int id;
-    String manufacturer;
-    String name;
-    String socket;
-    String frequency;
-    String price;
+    private int id;
+    private String manufacturer;
+    private String name;
+    private String socket;
+    private String frequency;
+    private String price;
+    private String img;
 
     public int getId() {
         return id;
@@ -50,6 +51,14 @@ public class CPU implements Item {
         this.frequency = frequency;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Override
     public String getPrice() {
         return price;
@@ -68,6 +77,7 @@ public class CPU implements Item {
             setSocket((String) params[3]);
             setFrequency((String) params[4]);
             setPrice((String) params[5]);
+            setImg((String) params[6]);
 
         } catch (Exception e) {
             e.printStackTrace();

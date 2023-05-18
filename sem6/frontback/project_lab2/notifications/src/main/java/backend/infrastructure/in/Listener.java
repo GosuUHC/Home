@@ -19,6 +19,7 @@ public class Listener implements MessageListener {
         try {
             String login = message.getStringProperty("login");
             String value = message.getStringProperty("value");
+            
             app.notificate(login, value);
         } catch (Exception e) {
 

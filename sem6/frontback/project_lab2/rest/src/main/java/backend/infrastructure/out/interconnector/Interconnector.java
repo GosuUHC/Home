@@ -1,5 +1,6 @@
 package backend.infrastructure.out.interconnector;
 
+import backend.application.interfaces.messaging.Interconnectable;
 import jakarta.annotation.Resource;
 import jakarta.jms.ConnectionFactory;
 import jakarta.jms.JMSContext;
@@ -21,8 +22,10 @@ public class Interconnector implements Interconnectable {
             JMSContext context = connectionFactory.createContext();
             JMSProducer producer = context.createProducer();
             Message message = context.createMessage();
+
             message.setStringProperty("login", login);
             message.setStringProperty("value", value);
+
             producer.send(queue, message);
         } catch (Exception e) {
 

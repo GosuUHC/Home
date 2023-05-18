@@ -13,8 +13,8 @@ import {
   MenuItem,
   Button,
   Pagination,
-  CircularProgress,
 } from "@mui/material";
+import Loading from "view/components/common/Loading";
 import styles from "./PageAdmin.module.css";
 
 function PageAdmin() {
@@ -31,23 +31,11 @@ function PageAdmin() {
   const tableRef = useRef(null);
 
   if (!loaded) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
-  const handleMouseMove = (e) => {
-    if (tableRef.current) {
-      const width = e.pageX - tableRef.current.getBoundingClientRect().left;
-      tableRef.current.style.width = `${width}px`;
-    }
-  };
-
-  const handleMouseUp = () => {
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-  };
-
   const displayOrders = tableData.map((order) => (
-    <TableRow key={order.id} style={{ fontSize: "20px" }}>
+    <TableRow key={order.id} style={{ fontSize: "15px" }}>
       <TableCell>{order.id}</TableCell>
       <TableCell>{order.userLogin}</TableCell>
       <TableCell>{order.itemType}</TableCell>
@@ -87,9 +75,9 @@ function PageAdmin() {
         className={styles.tableContainer}
         ref={tableRef}
       >
-        <Table style={{ fontSize: "28px" }}>
+        <Table size="small">
           <TableHead>
-            <TableRow>
+            <TableRow >
               <TableCell>ID</TableCell>
               <TableCell>Customer</TableCell>
               <TableCell>Item type</TableCell>

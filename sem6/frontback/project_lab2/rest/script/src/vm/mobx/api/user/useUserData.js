@@ -12,7 +12,7 @@ function useUserData() {
         userStore.setAuthorized(true);
       })
       .catch(() => {
-        userStore.resetUserState();
+        userStore.setError("Invalid login/password");
       });
   };
 

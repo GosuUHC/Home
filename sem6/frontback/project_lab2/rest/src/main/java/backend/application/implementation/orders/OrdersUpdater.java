@@ -26,11 +26,14 @@ public class OrdersUpdater implements IOrdersUpdater {
         if (order == null) {
             return null;
         }
+
         Order changedOrder = new OrderBuilder(order.getUserLogin(), order.getitemType(), order.getItemid(),
                 order.getItemCount())
                 .setId(order.getId()).setItem(order.getItem()).setPrice()
                 .setStatus(OrderStatus.getValue(newStatus)).build();
+
         updateOrder(order, changedOrder);
+        
         return changedOrder;
     }
 

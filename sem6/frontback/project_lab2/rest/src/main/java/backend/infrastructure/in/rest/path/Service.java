@@ -6,6 +6,7 @@ import java.util.Map;
 import backend.application.implementation.authentication.User;
 import backend.application.interfaces.authentication.IAuthorizer;
 import backend.application.interfaces.items.IItemsGetter;
+import backend.application.interfaces.messaging.Interconnectable;
 import backend.application.interfaces.orders.IOrdersDeleter;
 import backend.application.interfaces.orders.IOrdersGetter;
 import backend.application.interfaces.orders.IOrdersPoster;
@@ -15,7 +16,6 @@ import backend.domain.pojo.Order;
 import backend.infrastructure.builder.Built;
 import backend.infrastructure.in.rest.interceptor.TokenRequired;
 import backend.infrastructure.in.rest.token.ITokenManager;
-import backend.infrastructure.out.interconnector.Interconnectable;
 import jakarta.inject.Inject;
 import jakarta.json.JsonObject;
 import jakarta.json.bind.Jsonb;
@@ -288,7 +288,6 @@ public class Service {
         notification.put("status", changedOrder.getStatus().name());
         resultJSON = jsonb.toJson(notification);
 
-        // notificationsCounterAsync.nextAndUpdate(login, resultJSON);
         interconnector.notificate(login, resultJSON);
 
         return Response.ok(changedOrder).build();
