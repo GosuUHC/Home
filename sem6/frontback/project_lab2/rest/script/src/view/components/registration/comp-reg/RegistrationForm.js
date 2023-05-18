@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "view/components/common/Button.js";
-import TextField from "view/components/common/textField";
+import TextField from "view/components/common/TextField";
 
 import styles from "./RegistrationForm.module.css";
 

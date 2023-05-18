@@ -77,7 +77,7 @@ function PageAdmin() {
       >
         <Table size="small">
           <TableHead>
-            <TableRow >
+            <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Customer</TableCell>
               <TableCell>Item type</TableCell>

@@ -1,19 +1,14 @@
-import Button from "view/components/common/Button";
-
-import { TableElement } from "model/main/modelMain";
-import CompItemCartElement from "view/components/main/itemCart/item-cart-element/ItemCartElement";
-
-import styles from "./PageItemCart.module.css";
+import { CardElement } from "model/main/modelMain";
+import ProductCard from "view/components/main/shared/ProductCard/ProductCard";
 import { useItemCart } from "vm/api";
 import Loading from "view/components/common/Loading";
+import ItemCartActions from "view/components/main/itemCart/ItemCartActions/ItemCartActions";
 
 function PageItemCart(props) {
   const {
     itemsList,
     loaded,
-    checks,
     counts,
-    handleCheck,
     handleCount,
     handleDelete,
     handleOrderCreation,
@@ -22,32 +17,31 @@ function PageItemCart(props) {
   if (!loaded) {
     return <Loading />;
   }
+
   const renderItemCart = itemsList.map((pageCartItem, i) => {
-    const item = new TableElement();
+    const item = new CardElement();
     item.set(pageCartItem);
     return (
-      <CompItemCartElement
+      <ProductCard
         key={i}
-        itemDesc={item.getRemainingFields(["id", "price"], true)}
-        itemid={item.getField("id")}
+        title={item.getRemainingFields(["id", "img", "price", "itemType"], true)}
+        description={item.getRemainingFields(["img", "manufacturer", "name"])}
         price={item.getField("price")}
-        count={counts[i]}
-        checked={checks[i]}
-        onChangeCheck={(e) => handleCheck(i, e.target.checked)}
-        onChangeCount={(e) => handleCount(i, e.target.value)}
-      ></CompItemCartElement>
+        img={item.getField("img")}
+        actions={
+          <ItemCartActions
+            index={i}
+            handleChangeQuantity={handleCount}
+            handleAddOrder={handleOrderCreation}
+            handleDeleteFromCart={handleDelete}
+            quantity={counts[i]}
+          />
+        }
+      />
     );
   });
 
-  return (
-    <div>
-      <div className={styles.delBtnDiv} onClick={handleDelete}>
-        Delete selected
-      </div>
-      <Button name="Add to orders" onClick={handleOrderCreation}></Button>
-      {renderItemCart}
-    </div>
-  );
+  return <>{renderItemCart}</>;
 }
 
 export default PageItemCart;

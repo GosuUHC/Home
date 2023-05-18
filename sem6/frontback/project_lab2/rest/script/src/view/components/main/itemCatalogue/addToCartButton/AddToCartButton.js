@@ -20,6 +20,7 @@ const AddToCartButton = ({ index, handleAdd }) => {
       onClick={handleButtonClick}
       className={`${styles.button} ${isAddedToCart ? styles.added : ""}`}
       startIcon={isAddedToCart ? <CheckCircleIcon /> : <ShoppingCartIcon />}
+      style={{ backgroundColor: isAddedToCart ? "green" : "" }}
     >
       {isAddedToCart ? "В корзине" : "В корзину"}
     </Button>

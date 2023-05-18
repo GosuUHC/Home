@@ -1,4 +1,4 @@
-class TableElement {
+class CardElement {
   constructor() {
     this.data = {};
   }
@@ -37,4 +37,4 @@ class TableElement {
   }
 }
 
-export { TableElement };
+export { CardElement };

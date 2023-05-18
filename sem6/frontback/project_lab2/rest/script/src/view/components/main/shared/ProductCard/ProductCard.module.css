@@ -6,7 +6,7 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  overflow: hidden; /* Добавляем overflow: hidden, чтобы обрезать содержимое, выходящее за пределы карточки */
+  overflow: hidden;
 }
 
 .photo {

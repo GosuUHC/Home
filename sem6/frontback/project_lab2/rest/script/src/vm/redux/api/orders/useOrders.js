@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
+  resetSelectAllValue,
+  reverseChecks,
   setOrdersChecks,
   setOrdersTableData,
   updateOrdersCheck,
@@ -28,6 +30,9 @@ function useOrders() {
 
   useEffect(() => {
     dispatch(fetchOrders());
+    return () => {
+      dispatch(resetSelectAllValue());
+    };
   }, [dispatch]);
 
   const handleCheck = (index, value) => {
@@ -42,9 +47,21 @@ function useOrders() {
       }
     }
     dispatch(fetchOrders());
+    dispatch(resetSelectAllValue());
   };
 
-  return { tableData, loaded, checks, handleCheck, handleDelete };
+  const handleChangeAll = () => {
+    dispatch(reverseChecks());
+  };
+
+  return {
+    tableData,
+    loaded,
+    checks,
+    handleCheck,
+    handleDelete,
+    handleChangeAll,
+  };
 }
 
 export { useOrders };

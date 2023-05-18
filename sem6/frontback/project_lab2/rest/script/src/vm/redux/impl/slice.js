@@ -19,15 +19,8 @@ const itemCartSlice = createSlice({
     updateItemsLoaded: (state, action) => {
       state.loaded = action.payload;
     },
-    setItemsChecks: (state, action) => {
-      state.checks = action.payload;
-    },
     setItemsCounts: (state, action) => {
       state.counts = action.payload;
-    },
-    updateItemsCheck: (state, action) => {
-      const { index, value } = action.payload;
-      state.checks[index] = value;
     },
     updateItemsCount: (state, action) => {
       const { index, value } = action.payload;
@@ -52,6 +45,7 @@ const ordersInitialState = {
   tableData: [],
   loaded: false,
   checks: [],
+  selectAllValue: true,
 };
 
 const ordersSlice = createSlice({
@@ -71,6 +65,13 @@ const ordersSlice = createSlice({
       const { index, value } = action.payload;
       state.checks[index] = value;
     },
+    reverseChecks: (state, action) => {
+      state.checks.fill(state.selectAllValue);
+      state.selectAllValue = !state.selectAllValue;
+    },
+    resetSelectAllValue: (state, action) => {
+      state.selectAllValue = ordersInitialState.selectAllValue;
+    },
   },
 });
 
@@ -79,6 +80,8 @@ export const {
   updateOrdersLoaded,
   setOrdersChecks,
   updateOrdersCheck,
+  reverseChecks,
+  resetSelectAllValue
 } = ordersSlice.actions;
 export const ordersReducer = ordersSlice.reducer;
 
@@ -88,7 +91,6 @@ const catalogueInitialState = {
   itemType: "",
   tableData: [],
   loaded: false,
-  selectedRowsIdx: [], // индексы строчек; товары с этих строчек надо будет добавить в корзину
 };
 
 const catalogueSlice = createSlice({

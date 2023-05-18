@@ -1,0 +1,19 @@
+.quantityContainer {
+  display: flex;
+  align-items: center;
+}
+
+.orderIcon {
+  color: #2196f3; /* цвет значка при оформлении заказа */
+  font-size: 24px; /* размер значка при оформлении заказа */
+}
+
+.successIcon {
+  color: #4caf50; /* цвет значка при успешном заказе */
+  font-size: 24px; /* размер значка при успешном заказе */
+}
+
+.errorIcon {
+  color: #f44336; /* цвет значка при ошибке заказа */
+  font-size: 24px; /* размер значка при ошибке заказа */
+}

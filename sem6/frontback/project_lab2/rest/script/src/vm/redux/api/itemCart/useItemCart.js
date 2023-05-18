@@ -6,10 +6,8 @@ import {
 } from "model/main/itemCart/modelItemCart";
 import {
   addItems,
-  setItemsChecks,
   setItemsCounts,
   updateItemsLoaded,
-  updateItemsCheck,
   updateItemsCount,
 } from "vm/redux/impl/slice";
 import { addOrder } from "model/main/orders/modelOrders";
@@ -18,10 +16,8 @@ const fetchItemCart = () => async (dispatch) => {
   try {
     const data = await getPageCartItemsList();
     const arrLen = data.length;
-    const checks = Array(arrLen).fill(false);
     const counts = Array(arrLen).fill(1);
     dispatch(addItems(data));
-    dispatch(setItemsChecks(checks));
     dispatch(setItemsCounts(counts));
     dispatch(updateItemsLoaded(true));
   } catch (error) {
@@ -31,47 +27,42 @@ const fetchItemCart = () => async (dispatch) => {
 
 function useItemCart() {
   const dispatch = useDispatch();
-  const { itemsList, loaded, checks, counts } = useSelector(
-    (state) => state.itemCart
-  );
+  const { itemsList, loaded, counts } = useSelector((state) => state.itemCart);
+
   useEffect(() => {
     dispatch(fetchItemCart());
   }, [dispatch]);
 
-  const handleCheck = (index, value) => {
-    dispatch(updateItemsCheck({ index, value }));
-  };
-
   const handleCount = (index, value) => {
+    if (value < 1 || value > 10) {
+      return;
+    }
     dispatch(updateItemsCount({ index, value }));
   };
 
-  const handleDelete = async () => {
-    const indicesToDel = checks
-      .map((elem, idx) => (elem ? idx : ""))
-      .filter(String); // make an array of checked items idxes
+  const handleDelete = async (index) => {
+    const indicesToDel = [index];
     await deletePageCartItems(indicesToDel);
     dispatch(fetchItemCart());
   };
 
-  const handleOrderCreation = () => {
-    itemsList.forEach(async (item, i) => {
-      if (!checks[i]) {
-        return;
-      }
-      const itemCount = counts[i];
-      const itemid = item["id"];
-      const itemType = item["itemType"];
-      await addOrder(itemid, itemType, itemCount);
-    });
+  const handleOrderCreation = async (i) => {
+    const itemCount = counts[i];
+    const itemId = itemsList[i]["id"];
+    const itemType = itemsList[i]["itemType"];
+    try {
+      await addOrder(itemId, itemType, itemCount);
+      return true;
+    } catch (error) {
+      console.error(`Error creating order for item ${itemId}: ${error}`);
+      return false;
+    }
   };
 
   return {
     itemsList,
     loaded,
-    checks,
     counts,
-    handleCheck,
     handleCount,
     handleDelete,
     handleOrderCreation,

@@ -1,12 +1,21 @@
-.delBtnDiv {
-  color: rgb(30, 126, 223);
-  width: auto;
-  height: auto;
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-.delBtnDiv:hover {
-  color: rgb(198, 146, 50);
+.selectAllButton {
+  color: rgb(30, 126, 223);
   cursor: pointer;
+}
+
+.deleteSelectedButton {
+  color: rgb(255, 84, 84);
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pageContainer {

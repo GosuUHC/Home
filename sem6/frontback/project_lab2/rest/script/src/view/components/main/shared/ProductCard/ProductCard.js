@@ -29,7 +29,7 @@ const ProductCard = ({ img, title, description, price, actions }) => {
 
         <div className={styles.actions}>
           <Typography variant="subtitle1" className={styles.price}>
-            {price}
+            {`${price} ₽`}
           </Typography>
           {actions}
         </div>

@@ -114,7 +114,7 @@ public class OrdersRepository implements IOrdersRepository {
             entityManager.joinTransaction();
 
             List<EOrder> eOrders = entityManager
-                    .createQuery("SELECT o FROM EOrder o WHERE o.userLogin = :username", EOrder.class)
+                    .createQuery("SELECT o FROM EOrder o WHERE o.userLogin = :username ORDER BY o.id", EOrder.class)
                     .setParameter("username", username).getResultList();
             userTransaction.commit();
 
