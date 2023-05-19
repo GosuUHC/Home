@@ -1,6 +1,6 @@
 package backend.infrastructure.out.interconnector;
 
-import backend.application.interfaces.messaging.Interconnectable;
+import backend.application.interfaces.out.messaging.Interconnectable;
 import jakarta.annotation.Resource;
 import jakarta.jms.ConnectionFactory;
 import jakarta.jms.JMSContext;
@@ -17,7 +17,7 @@ public class Interconnector implements Interconnectable {
     private Queue queue;
 
     @Override
-    public void notificate(String login, String value) {
+    public void notifyUser(String login, String value) {
         try {
             JMSContext context = connectionFactory.createContext();
             JMSProducer producer = context.createProducer();

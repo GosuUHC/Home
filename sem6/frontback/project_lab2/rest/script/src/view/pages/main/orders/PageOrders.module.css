@@ -17,16 +17,3 @@
   margin-left: auto;
   margin-right: auto;
 }
-
-.pageContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.ordersContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}

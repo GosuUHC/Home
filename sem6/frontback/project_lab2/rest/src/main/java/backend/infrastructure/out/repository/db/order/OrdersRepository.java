@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import backend.application.interfaces.repositories.itemsRepository.IItemsRepository;
-import backend.application.interfaces.repositories.ordersRepository.IOrdersRepository;
-import backend.domain.pojo.Item;
-import backend.domain.pojo.Order;
-import backend.domain.pojo.Order.OrderBuilder;
+import backend.application.dto.Item;
+import backend.application.dto.Order;
+import backend.application.dto.Order.OrderBuilder;
+import backend.application.interfaces.out.repository.itemsRepository.IItemsRepository;
+import backend.application.interfaces.out.repository.ordersRepository.IOrdersRepository;
 import backend.infrastructure.out.repository.db.order.entities.EOrder;
 import jakarta.annotation.Resource;
 import jakarta.inject.Inject;

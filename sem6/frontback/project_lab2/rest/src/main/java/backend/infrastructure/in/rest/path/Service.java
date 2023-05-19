@@ -3,16 +3,16 @@ package backend.infrastructure.in.rest.path;
 import java.util.HashMap;
 import java.util.Map;
 
+import backend.application.dto.Order;
 import backend.application.implementation.authentication.User;
-import backend.application.interfaces.authentication.IAuthorizer;
-import backend.application.interfaces.items.IItemsGetter;
-import backend.application.interfaces.messaging.Interconnectable;
-import backend.application.interfaces.orders.IOrdersDeleter;
-import backend.application.interfaces.orders.IOrdersGetter;
-import backend.application.interfaces.orders.IOrdersPoster;
-import backend.application.interfaces.orders.IOrdersUpdater;
-import backend.application.interfaces.registration.IRegistrator;
-import backend.domain.pojo.Order;
+import backend.application.interfaces.in.authentication.IAuthorizer;
+import backend.application.interfaces.in.items.IItemsGetter;
+import backend.application.interfaces.in.orders.IOrdersDeleter;
+import backend.application.interfaces.in.orders.IOrdersGetter;
+import backend.application.interfaces.in.orders.IOrdersPoster;
+import backend.application.interfaces.in.orders.IOrdersUpdater;
+import backend.application.interfaces.in.registration.IRegistrator;
+import backend.application.interfaces.out.messaging.Interconnectable;
 import backend.infrastructure.builder.Built;
 import backend.infrastructure.in.rest.interceptor.TokenRequired;
 import backend.infrastructure.in.rest.token.ITokenManager;
@@ -36,6 +36,7 @@ import jakarta.ws.rs.core.Response;
 @Path("/")
 public class Service {
 
+    // application begin
     @Inject
     @Built
     private IAuthorizer authorizer;
@@ -63,6 +64,7 @@ public class Service {
     @Inject
     @Built
     private IItemsGetter itemsGetter;
+    // application end
 
     @Inject
     private ITokenManager tokenManager;
@@ -70,7 +72,6 @@ public class Service {
     @Inject
     private Interconnectable interconnector;
 
-    // authorization
     @POST
     @Path("/auth")
     @Consumes("application/json")
@@ -288,7 +289,7 @@ public class Service {
         notification.put("status", changedOrder.getStatus().name());
         resultJSON = jsonb.toJson(notification);
 
-        interconnector.notificate(login, resultJSON);
+        interconnector.notifyUser(login, resultJSON);
 
         return Response.ok(changedOrder).build();
     }

@@ -1,7 +1,7 @@
 package backend.application.implementation.orders;
 
-import backend.application.interfaces.orders.IOrdersDeleter;
-import backend.application.interfaces.repositories.ordersRepository.IOrdersRepository;
+import backend.application.interfaces.in.orders.IOrdersDeleter;
+import backend.application.interfaces.out.repository.ordersRepository.IOrdersRepository;
 
 public class OrdersDeleter implements IOrdersDeleter {
 

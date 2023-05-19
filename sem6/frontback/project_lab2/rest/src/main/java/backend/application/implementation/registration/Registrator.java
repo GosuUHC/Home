@@ -3,8 +3,8 @@ package backend.application.implementation.registration;
 import java.sql.SQLException;
 
 import backend.application.implementation.authentication.User;
-import backend.application.interfaces.registration.IRegistrator;
-import backend.application.interfaces.repositories.usersRepository.IUsersRepository;
+import backend.application.interfaces.in.registration.IRegistrator;
+import backend.application.interfaces.out.repository.usersRepository.IUsersRepository;
 
 public class Registrator implements IRegistrator {
 

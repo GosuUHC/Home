@@ -1,4 +1,3 @@
-import { CardElement } from "model/main/modelMain";
 import ProductCard from "view/components/main/shared/ProductCard/ProductCard";
 import { useItemCart } from "vm/api";
 import Loading from "view/components/common/Loading";
@@ -18,16 +17,23 @@ function PageItemCart(props) {
     return <Loading />;
   }
 
-  const renderItemCart = itemsList.map((pageCartItem, i) => {
-    const item = new CardElement();
-    item.set(pageCartItem);
+  const renderItemCart = itemsList.map((item, i) => {
+    const otherFields = Object.entries(item.other)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ");
+
     return (
       <ProductCard
         key={i}
-        title={item.getRemainingFields(["id", "img", "price", "itemType"], true)}
-        description={item.getRemainingFields(["img", "manufacturer", "name"])}
-        price={item.getField("price")}
-        img={item.getField("img")}
+        title={`${item.manufacturer} ${item.name}`}
+        description={[
+          otherFields,
+          `id: ${item.id}`,
+          `price: ${item.price}`,
+          `type: ${item.itemType}`,
+        ]}
+        price={item.price}
+        img={item.img}
         actions={
           <ItemCartActions
             index={i}

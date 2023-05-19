@@ -9,6 +9,7 @@ function useItemType() {
   const handleItemTypeChange = (value) => {
     value = value ? value : "";
     dispatch(setItemType(value));
+    
   };
 
   return { handleItemTypeChange, itemType };

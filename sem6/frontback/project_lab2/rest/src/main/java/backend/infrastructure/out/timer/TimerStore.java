@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import backend.application.interfaces.async.timer.TimerStorable;
+import backend.application.interfaces.out.async.timer.TimerStorable;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped

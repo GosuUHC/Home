@@ -20,7 +20,7 @@ const ProductCard = ({ img, title, description, price, actions }) => {
 
       <CardContent className={styles.content}>
         <div className={styles.header}>
-          <Typography variant="h7" className={styles.title}>
+          <Typography variant="h6" style={{ fontWeight: "bold" }} >
             {title}
           </Typography>
         </div>

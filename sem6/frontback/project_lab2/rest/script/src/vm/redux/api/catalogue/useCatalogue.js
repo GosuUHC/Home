@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+  addAddedToCartIndices,
+  resetAddedToCartIndices,
   setCatalogueTableData,
   updateCatalogueLoaded,
 } from "vm/redux/impl/slice";
@@ -15,6 +17,7 @@ const fetchCatalogue = (itemType) => async (dispatch) => {
   }
   try {
     const data = await getItems(itemType);
+    dispatch(resetAddedToCartIndices());
     dispatch(setCatalogueTableData(data));
     dispatch(updateCatalogueLoaded(true));
   } catch (error) {
@@ -24,7 +27,7 @@ const fetchCatalogue = (itemType) => async (dispatch) => {
 
 function useCatalogue() {
   const dispatch = useDispatch();
-  const { itemType, tableData, loaded } = useSelector(
+  const { itemType, tableData, loaded, addedToCartIndices } = useSelector(
     (state) => state.catalogue
   );
 
@@ -38,11 +41,13 @@ function useCatalogue() {
     dataToAdd.itemType = itemType;
     itemsToAdd.push(dataToAdd);
     addPageCartItems(itemsToAdd);
+    dispatch(addAddedToCartIndices(index));
   };
 
   return {
     tableData,
     loaded,
+    addedToCartIndices,
     handleAdd,
   };
 }

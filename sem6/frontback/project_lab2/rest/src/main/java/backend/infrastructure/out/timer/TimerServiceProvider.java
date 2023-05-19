@@ -2,7 +2,7 @@ package backend.infrastructure.out.timer;
 
 import java.util.Date;
 
-import backend.application.interfaces.async.timer.TimerServiceable;
+import backend.application.interfaces.out.async.timer.TimerServiceable;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import jakarta.ejb.Singleton;

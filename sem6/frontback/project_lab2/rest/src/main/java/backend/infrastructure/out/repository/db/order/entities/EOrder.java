@@ -1,7 +1,7 @@
 package backend.infrastructure.out.repository.db.order.entities;
 
-import backend.domain.pojo.Order;
-import backend.domain.pojo.OrderStatus;
+import backend.application.dto.Order;
+import backend.application.dto.OrderStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

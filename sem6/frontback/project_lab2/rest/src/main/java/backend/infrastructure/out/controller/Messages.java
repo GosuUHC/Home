@@ -2,8 +2,8 @@ package backend.infrastructure.out.controller;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import backend.application.interfaces.async.timer.Timerable;
-import backend.application.interfaces.messaging.MessageSender;
+import backend.application.interfaces.in.async.timer.Timerable;
+import backend.application.interfaces.out.messaging.MessageSender;
 import backend.infrastructure.builder.Built;
 import jakarta.inject.Inject;
 import jakarta.websocket.OnClose;

@@ -1,15 +1,15 @@
 package backend.infrastructure.builder;
 
-import backend.application.interfaces.authentication.IAuthorizer;
-import backend.application.interfaces.items.IItemsGetter;
-import backend.application.interfaces.orders.IOrdersDeleter;
-import backend.application.interfaces.orders.IOrdersGetter;
-import backend.application.interfaces.orders.IOrdersPoster;
-import backend.application.interfaces.orders.IOrdersUpdater;
-import backend.application.interfaces.registration.IRegistrator;
-import backend.application.interfaces.repositories.itemsRepository.IItemsRepository;
-import backend.application.interfaces.repositories.ordersRepository.IOrdersRepository;
-import backend.application.interfaces.repositories.usersRepository.IUsersRepository;
+import backend.application.interfaces.in.authentication.IAuthorizer;
+import backend.application.interfaces.in.items.IItemsGetter;
+import backend.application.interfaces.in.orders.IOrdersDeleter;
+import backend.application.interfaces.in.orders.IOrdersGetter;
+import backend.application.interfaces.in.orders.IOrdersPoster;
+import backend.application.interfaces.in.orders.IOrdersUpdater;
+import backend.application.interfaces.in.registration.IRegistrator;
+import backend.application.interfaces.out.repository.itemsRepository.IItemsRepository;
+import backend.application.interfaces.out.repository.ordersRepository.IOrdersRepository;
+import backend.application.interfaces.out.repository.usersRepository.IUsersRepository;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;

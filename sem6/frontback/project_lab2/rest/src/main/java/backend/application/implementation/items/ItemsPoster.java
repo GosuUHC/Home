@@ -1,8 +1,8 @@
 package backend.application.implementation.items;
 
-import backend.application.interfaces.items.IItemsPoster;
-import backend.application.interfaces.repositories.itemsRepository.IItemsRepository;
-import backend.domain.pojo.Item;
+import backend.application.dto.Item;
+import backend.application.interfaces.in.items.IItemsPoster;
+import backend.application.interfaces.out.repository.itemsRepository.IItemsRepository;
 
 public class ItemsPoster implements IItemsPoster {
 

@@ -1,4 +1,3 @@
-import { CardElement } from "model/main/modelMain.js";
 import { useOrders } from "vm/api";
 
 import styles from "./PageOrders.module.css";
@@ -19,18 +18,26 @@ function PageOrders(props) {
     return <Loading />;
   }
 
-  const renderOrders = tableData.map((tableItem, i) => {
-    const order = new CardElement();
-    const item = new CardElement();
-    order.set(tableItem);
-    item.set(tableItem["item"]);
+  const renderOrders = tableData.map((order, i) => {
+    const item = order.item;
+    const otherFields = Object.entries(item.other)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ");
+
     return (
       <ProductCardWithCheckbox
         key={i}
-        title={item.getRemainingFields(["id", "img", "price"], true)}
-        description={order.getRemainingFields(["userLogin", "item", "price"])}
-        price={order.getField("price")}
-        img={item.getField("img")}
+        title={`${item.manufacturer} ${item.name}`}
+        description={[
+          otherFields,
+          `order id: ${order.id}`,
+          `count: ${order.itemCount}`,
+          `type: ${order.itemType}`,
+          `item id: ${order.itemId}`,
+          `status: ${order.status}`,
+        ]}
+        price={order.price}
+        img={item.img}
         checked={checks[i]}
         handleCheckboxChange={(e) => handleCheck(i, e.target.checked)}
       />

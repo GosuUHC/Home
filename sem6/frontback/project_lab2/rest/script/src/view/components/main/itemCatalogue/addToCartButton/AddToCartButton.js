@@ -1,16 +1,12 @@
-import { useState } from "react";
 import { Button } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import styles from "./AddToCartButton.module.css";
 
-const AddToCartButton = ({ index, handleAdd }) => {
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
-
+const AddToCartButton = ({ index, handleAdd, isAddedToCart }) => {
   const handleButtonClick = () => {
     if (!isAddedToCart) {
       handleAdd(index);
-      setIsAddedToCart(true);
     }
   };
 

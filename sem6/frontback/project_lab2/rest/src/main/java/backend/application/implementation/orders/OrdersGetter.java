@@ -2,9 +2,9 @@ package backend.application.implementation.orders;
 
 import java.util.Collection;
 
-import backend.application.interfaces.orders.IOrdersGetter;
-import backend.application.interfaces.repositories.ordersRepository.IOrdersRepository;
-import backend.domain.pojo.Order;
+import backend.application.dto.Order;
+import backend.application.interfaces.in.orders.IOrdersGetter;
+import backend.application.interfaces.out.repository.ordersRepository.IOrdersRepository;
 
 public class OrdersGetter implements IOrdersGetter {
 

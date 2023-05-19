@@ -1,9 +1,9 @@
 package backend.infrastructure.builder.async;
 
-import backend.application.interfaces.async.Executable;
-import backend.application.interfaces.async.timer.TimerServiceable;
-import backend.application.interfaces.async.timer.TimerStorable;
-import backend.application.interfaces.async.timer.Timerable;
+import backend.application.interfaces.in.async.timer.Timerable;
+import backend.application.interfaces.out.async.Executable;
+import backend.application.interfaces.out.async.timer.TimerServiceable;
+import backend.application.interfaces.out.async.timer.TimerStorable;
 import backend.infrastructure.builder.Built;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Produces;

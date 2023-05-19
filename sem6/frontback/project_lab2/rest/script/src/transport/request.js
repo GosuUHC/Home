@@ -30,10 +30,8 @@ async function fetchWrapper(
   const role = localStorage.getItem("role");
   headers["role"] = role ? role : "";
 
-
-  let response = await fetch(uri, options);
-
   try {
+    let response = await fetch(uri, options);
     switch (response.headers.get("Content-Type")) {
       case "application/json":
         return await response.json();
@@ -44,6 +42,7 @@ async function fetchWrapper(
     }
   } catch (err) {
     console.log(err);
+    throw err;
   }
 }
 

@@ -1,10 +1,13 @@
 package backend.application.implementation.orders;
 
-import backend.application.interfaces.orders.IOrdersPoster;
-import backend.application.interfaces.repositories.itemsRepository.IItemsRepository;
-import backend.application.interfaces.repositories.ordersRepository.IOrdersRepository;
-import backend.domain.pojo.OrderStatus;
-import backend.domain.pojo.Order.OrderBuilder;
+import backend.application.dto.Item;
+import backend.application.dto.OrderStatus;
+import backend.application.dto.Order.OrderBuilder;
+import backend.application.interfaces.in.orders.IOrdersPoster;
+import backend.application.interfaces.out.repository.itemsRepository.IItemsRepository;
+import backend.application.interfaces.out.repository.ordersRepository.IOrdersRepository;
+import backend.domain.Factory;
+import backend.domain.api.Priceable;
 
 public class OrdersPoster implements IOrdersPoster {
 
@@ -26,8 +29,15 @@ public class OrdersPoster implements IOrdersPoster {
     public void addNewOrder(String userLogin, int itemid, String itemCount, String itemType) {
         OrderBuilder orderBuilder = new OrderBuilder(userLogin, itemType, itemid, itemCount);
 
-        orderBuilder.setItem(itemsRepository.findByIdAndType(itemid, itemType));
-        orderBuilder.setPrice();
+        Item item = itemsRepository.findByIdAndType(itemid, itemType);
+
+        orderBuilder.setItem(item);
+        Priceable priceCalculator = Factory.createCalculator();
+
+        String price = String
+                .valueOf(priceCalculator.calculatePrice(Integer.valueOf(item.getPrice()), Integer.valueOf(itemCount)));
+
+        orderBuilder.setPrice(price);
         orderBuilder.setStatus(OrderStatus.processing);
 
         ordersRepository.addNewOrder(orderBuilder.build());

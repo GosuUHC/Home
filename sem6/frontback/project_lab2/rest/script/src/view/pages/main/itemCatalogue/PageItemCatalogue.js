@@ -1,27 +1,34 @@
 import { useCatalogue } from "vm/api.js";
-import { CardElement } from "model/main/modelMain";
 import ProductCard from "view/components/main/shared/ProductCard/ProductCard";
 import AddToCartButton from "view/components/main/itemCatalogue/addToCartButton/AddToCartButton";
 import Loading from "view/components/common/Loading";
 
 function PageItemCatalogue(props) {
-  const { tableData, loaded, handleAdd } = useCatalogue();
+  const { tableData, loaded, handleAdd, addedToCartIndices } = useCatalogue();
 
   if (!loaded) {
     return <Loading />;
   }
 
-  const renderCatalogue = tableData.map((data, i) => {
-    const item = new CardElement();
-    item.set(data);
+  const renderCatalogue = tableData.map((item, i) => {
+    const otherFields = Object.entries(item.other)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ");
+    const isAddedToCart = addedToCartIndices.includes(i);
     return (
       <ProductCard
         key={i}
-        title={item.getRemainingFields(["id", "img", "price", "itemType"], true)}
-        description={item.getRemainingFields(["img", "manufacturer", "name"])}
-        price={item.getField("price")}
-        img={item.getField("img")}
-        actions={<AddToCartButton index={i} handleAdd={handleAdd} />}
+        title={`${item.manufacturer} ${item.name}`}
+        description={[otherFields, `id: ${item.id}`, `price: ${item.price}`]}
+        price={item.price}
+        img={item.img}
+        actions={
+          <AddToCartButton
+            isAddedToCart={isAddedToCart}
+            index={i}
+            handleAdd={handleAdd}
+          />
+        }
       />
     );
   });

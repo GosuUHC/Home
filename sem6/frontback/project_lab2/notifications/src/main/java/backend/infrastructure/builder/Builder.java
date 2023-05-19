@@ -1,8 +1,8 @@
 package backend.infrastructure.builder;
 
-import backend.application.async.api.Executable;
-import backend.application.async.api.Notificationable;
-import backend.application.async.api.Updatable;
+import backend.application.in.async.api.Notificationable;
+import backend.application.out.Executable;
+import backend.application.out.Updatable;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;

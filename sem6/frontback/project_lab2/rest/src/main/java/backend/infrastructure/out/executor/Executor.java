@@ -1,6 +1,6 @@
 package backend.infrastructure.out.executor;
 
-import backend.application.interfaces.async.Executable;
+import backend.application.interfaces.out.async.Executable;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.concurrent.ManagedExecutorService;
 

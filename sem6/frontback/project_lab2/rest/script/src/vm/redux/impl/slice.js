@@ -81,7 +81,7 @@ export const {
   setOrdersChecks,
   updateOrdersCheck,
   reverseChecks,
-  resetSelectAllValue
+  resetSelectAllValue,
 } = ordersSlice.actions;
 export const ordersReducer = ordersSlice.reducer;
 
@@ -91,6 +91,7 @@ const catalogueInitialState = {
   itemType: "",
   tableData: [],
   loaded: false,
+  addedToCartIndices: [],
 };
 
 const catalogueSlice = createSlice({
@@ -106,11 +107,22 @@ const catalogueSlice = createSlice({
     updateCatalogueLoaded: (state, action) => {
       state.loaded = action.payload;
     },
+    addAddedToCartIndices: (state, action) => {
+      state.addedToCartIndices = [...state.addedToCartIndices, action.payload];
+    },
+    resetAddedToCartIndices: (state, action) => {
+      state.addedToCartIndices = catalogueInitialState.addedToCartIndices;
+    },
   },
 });
 
-export const { setItemType, setCatalogueTableData, updateCatalogueLoaded } =
-  catalogueSlice.actions;
+export const {
+  setItemType,
+  setCatalogueTableData,
+  updateCatalogueLoaded,
+  addAddedToCartIndices,
+  resetAddedToCartIndices,
+} = catalogueSlice.actions;
 export const catalogueReducer = catalogueSlice.reducer;
 
 // ****************************************************************************************

@@ -1,6 +1,6 @@
 package backend.infrastructure.in;
 
-import backend.application.async.api.Notificationable;
+import backend.application.in.async.api.Notificationable;
 import backend.infrastructure.builder.Built;
 import jakarta.ejb.MessageDriven;
 import jakarta.inject.Inject;
@@ -19,8 +19,8 @@ public class Listener implements MessageListener {
         try {
             String login = message.getStringProperty("login");
             String value = message.getStringProperty("value");
-            
-            app.notificate(login, value);
+
+            app.notifyUser(login, value);
         } catch (Exception e) {
 
         }

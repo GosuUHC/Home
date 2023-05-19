@@ -2,9 +2,9 @@ package backend.application.implementation.items;
 
 import java.util.ArrayList;
 
-import backend.application.interfaces.items.IItemsGetter;
-import backend.application.interfaces.repositories.itemsRepository.IItemsRepository;
-import backend.domain.pojo.Item;
+import backend.application.dto.Item;
+import backend.application.interfaces.in.items.IItemsGetter;
+import backend.application.interfaces.out.repository.itemsRepository.IItemsRepository;
 
 public class ItemsGetter implements IItemsGetter {
 

@@ -2,10 +2,10 @@ package backend.application.implementation.async.timer;
 
 import java.util.Collection;
 
-import backend.application.interfaces.async.Executable;
-import backend.application.interfaces.async.timer.TimerServiceable;
-import backend.application.interfaces.async.timer.TimerStorable;
-import backend.application.interfaces.async.timer.Timerable;
+import backend.application.interfaces.in.async.timer.Timerable;
+import backend.application.interfaces.out.async.Executable;
+import backend.application.interfaces.out.async.timer.TimerServiceable;
+import backend.application.interfaces.out.async.timer.TimerStorable;
 
 public class Timer implements Timerable {
 

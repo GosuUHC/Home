@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import backend.application.interfaces.repositories.itemsRepository.IItemsRepository;
-import backend.domain.pojo.Item;
-import backend.domain.pojo.factory.ItemFactory.IItemFactory;
-import backend.domain.pojo.factory.ItemFactory.ItemFactory;
+import backend.application.dto.Item;
+import backend.application.dto.factory.ItemFactory.IItemFactory;
+import backend.application.dto.factory.ItemFactory.ItemFactory;
+import backend.application.interfaces.out.repository.itemsRepository.IItemsRepository;
 import backend.infrastructure.out.repository.db.item.entities.EItem;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
@@ -26,17 +26,6 @@ public class ItemsRepository implements IItemsRepository {
     private UserTransaction userTransaction;
 
     @Override
-    public void addNewItem(Item item, String type, Integer quantity) {
-        EntityManager entityManager;
-        try {
-            entityManager = entityManagerFactory.createEntityManager();
-        } catch (Exception e) {
-            Logger.getLogger(ItemsRepository.class.getName()).log(Level.WARNING, e.getMessage());
-        } 
-
-    }
-
-    @Override
     public Collection<Item> findAllByType(String itemType) {
         EntityManager entityManager;
         try {
@@ -48,7 +37,8 @@ public class ItemsRepository implements IItemsRepository {
         try {
             userTransaction.begin();
             entityManager.joinTransaction();
-            List<EItem> eItems = entityManager.createQuery("SELECT i FROM " + getEntityName(itemType) + " i")
+            List<EItem> eItems = entityManager
+                    .createQuery("SELECT i FROM " + getEntityName(itemType) + " i", EItem.class)
                     .getResultList();
             userTransaction.commit();
 
@@ -99,7 +89,7 @@ public class ItemsRepository implements IItemsRepository {
             entityManager.joinTransaction();
 
             List<EItem> eItem = entityManager
-                    .createQuery("SELECT i FROM " + getEntityName(itemType) + " i WHERE i.id = :id")
+                    .createQuery("SELECT i FROM " + getEntityName(itemType) + " i WHERE i.id = :id", EItem.class)
                     .setParameter("id", itemid).getResultList();
 
             userTransaction.commit();
@@ -119,11 +109,9 @@ public class ItemsRepository implements IItemsRepository {
 
     @Override
     public void deleteByIdAndType(Integer id, String type) {
-        EntityManager entityManager;
-        try {
-            entityManager = entityManagerFactory.createEntityManager();
-        } catch (Exception e) {
-            Logger.getLogger(ItemsRepository.class.getName()).log(Level.WARNING, e.getMessage());
-        } 
+    }
+
+    @Override
+    public void addNewItem(Item item, String type, Integer quantity) {
     }
 }

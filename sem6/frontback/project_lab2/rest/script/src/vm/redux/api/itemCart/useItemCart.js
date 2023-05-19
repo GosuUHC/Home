@@ -54,7 +54,7 @@ function useItemCart() {
       await addOrder(itemId, itemType, itemCount);
       return true;
     } catch (error) {
-      console.error(`Error creating order for item ${itemId}: ${error}`);
+      console.log(`Error creating order for item ${itemId}: ${error}`);
       return false;
     }
   };

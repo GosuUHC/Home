@@ -2,8 +2,8 @@ package backend.application.implementation.authentication;
 
 import java.sql.SQLException;
 
-import backend.application.interfaces.authentication.IAuthorizer;
-import backend.application.interfaces.repositories.usersRepository.IUsersRepository;
+import backend.application.interfaces.in.authentication.IAuthorizer;
+import backend.application.interfaces.out.repository.usersRepository.IUsersRepository;
 
 public class Authorizer implements IAuthorizer {
 

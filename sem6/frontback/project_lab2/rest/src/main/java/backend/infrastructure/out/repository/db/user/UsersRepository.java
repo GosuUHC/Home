@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import backend.application.implementation.authentication.User;
-import backend.application.interfaces.repositories.usersRepository.IUsersRepository;
+import backend.application.interfaces.out.repository.usersRepository.IUsersRepository;
 import backend.infrastructure.out.repository.db.user.entities.EUser;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;

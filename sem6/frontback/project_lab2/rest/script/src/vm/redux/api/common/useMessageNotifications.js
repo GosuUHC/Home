@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { manageMessages } from "model/common/model";
+import { manageMessages } from "model/common/messagesModel";
 import {
   addMessageNotification,
   removeMessageNotification,
